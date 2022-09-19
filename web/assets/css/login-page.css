@@ -1,0 +1,213 @@
+header.login-header {
+    top: 25px;
+    position: absolute;
+    z-index: 5;
+    width: 100%;
+}
+.login-header-wrap {
+    padding: 0 152px;
+}
+section.login-page {
+    background: url(../images/login-bg.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    padding-top: 211px;
+    position: relative;
+    padding-bottom: 50px;
+}
+.left-logo h1 {
+    font-size: 70px;
+    color: var(--primary-color)
+}
+.login-header-wrap {
+    padding: 0 182px;
+}
+
+h2.login-title {
+    font-size: 67px;
+    text-align: center;
+    max-width: 650px;
+    margin: 0 auto;
+    line-height: 1.1;
+    margin-bottom: 32px;
+}
+
+p.login-info {
+    font-size: 24px;
+    max-width: 1350px;
+    font-weight: 500;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.login-form {
+    width: 600px;
+    margin: 45px auto 0px;
+    text-align: left;
+}
+.input-wrap {
+    position: relative;
+}
+.login-form input {
+    width: 100%;
+    border: 1px solid #70707063;
+    font-size: 18px;
+    padding: 16px 15px;
+    background: #fff;
+    margin-bottom: 30px;
+}
+
+.input-wrap label {
+    position: absolute;
+    top: -9px;
+    font-size: 18px;
+    color: #9A9A9A;
+    left: 15px;
+    background-color: #fff;
+    line-height: 1;
+    width: auto;
+    z-index: 55;
+    padding: 0 2px;
+}
+.login-form .d-btn {
+    width: 100%;
+    margin: 25px 0px;
+}
+header.login-header .right-btn a {
+    margin-left: 40px;
+}
+img.login-bottom-shape {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+}
+
+img.login-top-shape {
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+.login-form input[type="password"] {
+    background-image: url(../images/password-eye.svg);
+    background-repeat: no-repeat;
+    background-position-x: calc(100% - 15px);
+    background-position-y: center;
+    background-size: 22px;
+}
+.login-form input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+p.forgot-password {
+    text-align: right;
+    margin-top: -15px;
+}
+
+p.forgot-password a {
+    color: #404040;
+}
+
+
+.login-form p {
+    font-size: 21px;
+    font-weight: 500;
+    color: #404040;
+}
+
+p.new-user {
+    text-align: center;
+    padding-top: 70px;
+}
+p.forgot-password a:hover{
+    color: var(--primary-color);
+}
+p.new-user a:hover{
+    color: #404040;
+}
+@media screen and (max-width: 1700px) {
+    img.login-top-shape {
+        width: 130px;
+    }
+    
+    img.login-bottom-shape {
+        width: 400px;
+    }
+    
+    .login-header-wrap {
+        padding: 0 150px;
+    }
+    
+    .left-logo h1 {
+        font-size: 55px;
+    }
+    
+    h2.login-title {
+        font-size: 50px;
+        max-width: 580px;
+    }
+    
+    p.login-info {
+        font-size: 20px;
+        max-width: 1100px;
+    }
+    
+    .d-btn {
+        font-size: 22px;
+    }
+    section.login-page{
+        padding-top: 180px;
+    }
+}
+@media screen and (max-width: 1400px) {
+    img.login-top-shape {
+        width: 100px;
+    }
+    
+    img.login-bottom-shape {
+        width: 300px;
+    }
+    
+    .login-header-wrap {
+        padding: 0 110px;
+    }
+    
+    .left-logo h1 {
+        font-size: 45px;
+    }
+    
+    h2.login-title {
+        font-size: 42px;
+        max-width: 490px;
+    }
+    
+    p.login-info {
+        font-size: 20px;
+        max-width: 1100px;
+    }
+    
+    .d-btn {
+        font-size: 18px;
+        padding: 8px 50px;
+        height: 45px;
+    }
+    header.login-header .right-btn a {
+        margin-left: 20px;
+    }
+    .login-form {
+        width: 500px;
+    }
+    .login-form .d-btn {
+        margin: 15px 0px;
+    }
+    .input-wrap label,.login-form input {
+        font-size: 16px;
+    }
+    section.login-page{
+        padding-top: 150px;
+    }
+    .login-form p {
+        font-size: 19px;
+
+    }
+}

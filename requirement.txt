@@ -1,0 +1,10 @@
+Eel
+numpy
+PyAutoGUI
+imutils
+opencv-python
+browserhistory
+browser-history
+PyInstaller
+pynput
+python-dateutil

@@ -1,0 +1,11 @@
+# create a build using 
+
+python3 -m eel main.py web --onefile --noconsole
+
+# install requirement
+
+pip3 install - r requirement.txt
+
+# run code
+
+python3 main.py
