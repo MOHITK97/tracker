@@ -40,17 +40,19 @@
                 <p class="company-label">Company</p>
                 <h4 class="company-name">Nirag Infotech</h4>
             </div>
-            <form action="javascript:searchItem();" id="form_id" method="post">
+            <form  onSubmit = "return checkPassword(this)" action="javascript:searchItem();" id="form_id" method="post">
             <div class="login-form">
                 <div class="input-wrap">
                     <label for="Email">Email</label>
                     <input class="email" type="mail" name="email">
+                    <span id="email"></span>
                 </div>
                 <div class="input-wrap">
                     <label for="Password">Password</label>
-                    <input class="password" type="password" name="password">
+                    <input class="password" id="typepass" type="password" name="password" onclick="Toggle()">
+                    <span id="password"></span>
                 </div>
-                <button type="submit" class="d-btn btn-primary">Sign In</button>
+                <button type="submit" onclick="regValidation()" class="d-btn btn-primary">Sign In</button>
             </div>
             </form>
         </div>
@@ -62,8 +64,44 @@
     <script src="https://kit.fontawesome.com/d8f1a5ab19.js" crossorigin="anonymous"></script>
     <script src="assets/js/jquery-3.2.1.slim.min.js"></script>
     <script src="assets/js/login-script.js"></script>
-        <script type="text/javascript" src="../eel.js"></script>
+    <script type="text/javascript" src="../eel.js"></script>
 
+    <script>
+        document.querySelector("submit").onclick = function summation(){  
+            var data_1 = document.getElementById("email").value  
+            var data_2 = document.getElementById("password").value  
+            eel.add(data_1, data_2)(call_Back)  
+        }  
+    </script>
+    <script>
+        // Change the type of input to password or text
+            function Toggle() {
+                var temp = document.getElementById("typepass");
+                if (temp.type === "password") {
+                    temp.type = "text";
+                }
+                else {
+                    temp.type = "password";
+                }
+            }
+    </script>
+
+    <script>
+        function regValidation()
+        {
+
+        var email1 = document.getElementById('email').value;
+        var email2 = document.getElementById('password').value;
+        }
+
+        if (email1 == ""){
+            
+            alert("Thank you for signing up!");
+        }
+        else{
+            pass
+        }
+    </script>
 
 </body>
 

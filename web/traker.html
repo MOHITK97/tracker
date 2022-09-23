@@ -14,8 +14,46 @@
     <link rel="stylesheet" type="text/css" href="assets/css/font-style.css">
     <link rel="stylesheet" type="text/css" href="assets/css/traker-window.css">
     <link rel="shortcut icon" type="image/x-icon" href="assets/images/test.png">
+    <script type="text/javascript" src='https://cdn.jsdelivr.net/sweetalert2/6.3.8/sweetalert2.min.js'></script>
+    <link media="screen" rel="stylesheet" href='https://cdn.jsdelivr.net/sweetalert2/6.3.8/sweetalert2.min.css' />
+    <link media="screen" rel="stylesheet" href='https://cdn.jsdelivr.net/sweetalert2/6.3.8/sweetalert2.css' />
+<style>
+    .toaster{
+        position: absolute;
+        width: 250px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #27c26c;    box-shadow: 0 5px 16px 0 rgba(14, 15, 18, 0.32);          
+        height: 60px;
+        
+        color:rgb(255, 255, 255);
+        z-index: 99999;
+        border-left: 4px solid rgb(1, 75, 1);
+        top: 30px;
+        border-radius: 5px;
+        right: 0;
+    }
+    .toaster span{
+        font-size: 20px;
+        left: 28px;
+        top: 28%;
+        position: relative;
 
+    }
+    .close_icon{
+        height:22px;
+        width:22px;
+        color:wihte;
+        padding-left: 40px;
+    }
+  
+</style>
 </head>
+<div class="toaster" id="error">
+    <div class="texture"></div>
+    <span>Screenshot Taken <img class="close_icon" src="assets/images/close.png"></span>
+</div>
     <div class="traker-main">
         <div class="traker-head">
             <!-- <div class="trak-top-head">

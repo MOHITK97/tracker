@@ -95,11 +95,18 @@ def random_python():
     print("Random function running")
     return randint(1,100)
 
+@eel.expose
+def take_screenshot():
+    eel.say_hello_js('function call form Python function')
+    pass
+
+# eel.start('traker.html')
 
 
 
 @eel.expose
 def sendscreenshot(start_time,end_time,cll,kss,body):
+    print("++++++++++++++++++++++++++++++++++ screeen short working")
     old= open('data.json', 'r').read()
     old=json.loads(old)
     for i in old:
@@ -122,8 +129,11 @@ def sendscreenshot(start_time,end_time,cll,kss,body):
     headers = {
       'Authorization': 'Bearer '+token
     }
+    # print("--------------- screent short",files)
     try:
         response = requests.request("POST", url, headers=headers, data=payload, files=files)
+        td = Thread (target = take_screenshot)
+        td.start()
     except requests.ConnectionError as e:
         print("OOPS!! Connection Error. Make sure you are connected to Internet. Technical Details given below.\n")
         print(str(e))   
@@ -145,6 +155,7 @@ def random_login(email,password):
     print("Random function running")
 
 
+
     url = "https://timedoctor.niraginfotech.com/api/user/login"
 
     payload = json.dumps({
@@ -159,30 +170,47 @@ def random_login(email,password):
     }
 
     response = requests.post(url, headers=headers, data=payload)
-    print(response.json())
+    print(">>>>>>>>>>>>>>>>>>>>>>>>>>>",response.json())
     data=response.json()
-    check=data['success']
-    checks=data['token']
-    shiftStartAt=data['user']['shiftStartAt']
-    shiftEndAt=data['user']['shiftEndAt']
-    print(shiftStartAt,shiftEndAt,"shiftEndAtshiftEndAtshiftEndAtshiftEndAt")
-    final.update({"token":checks,"trackid":"-","date":"-","shiftStartAt":shiftStartAt,"shiftEndAt":shiftEndAt,"break":"-"})
-    if check==True:
-        json_object = json.dumps(final, indent=1)
-     
-        # Writing to sample.json
-        with open("data.json", "w") as outfile:
-            outfile.write(json_object)
-        done="success"
-        print(done,"doneeeee")
+
+    if email == "" and password == "":
+        done="email & password"
+        print(done)
         return done
+
+    elif email == "":
+        done="email"
+        print(done)
+        return done
+
+    elif password == "":
+        done="password"
+        print(done)
+        return done
+
     else:
-        done="error"
-        print(done,"doneeeee++++++++++")
-        return done
-    # except:
-    #     done="error"
-    #     return done
+        check=data['success']
+        checks=data['token']
+        shiftStartAt=data['user']['shiftStartAt']
+        shiftEndAt=data['user']['shiftEndAt']
+        print(shiftStartAt,shiftEndAt,"shiftEndAtshiftEndAtshiftEndAtshiftEndAt")
+        final.update({"token":checks,"trackid":"-","date":"-","shiftStartAt":shiftStartAt,"shiftEndAt":shiftEndAt,"break":"-"})
+        if check==True:
+            json_object = json.dumps(final, indent=1)
+        
+            # Writing to sample.json
+            with open("data.json", "w") as outfile:
+                outfile.write(json_object)
+            done="success"
+            print(done,"doneeeee")
+            return done
+        else:
+            done="error"
+            print(done,"doneeeee++++++++++")
+            return done
+        # except:
+        #     done="error"
+        #     return done
 
 @eel.expose
 def breakend():
@@ -269,6 +297,17 @@ def shiftstart():
 # start time or tracing id vala code khatam
 
 @eel.expose
+def get_mouse_and_keyboard_movement(key_press,mouse_click):
+    print("@@@@@@@@@@@@@@@@@@@ click getting from new function keyboard",key_press)
+    print("@@@@@@@@@@@@@@@@@@@ click getting from new function mouse click",mouse_click)
+    
+    if ((key_press == 0 ) and (mouse_click == 0 )):
+        eel.get_timer_js(key_press,mouse_click)
+        
+        return True
+    return False
+
+@eel.expose
 def write_feature():
     print("started")
 
@@ -344,6 +383,7 @@ def write_feature():
             print("key is pressed")
             key_press.append("Key_pressed")
             return "done"
+        
 
         from pynput import keyboard
         key_listener = keyboard.Listener(on_press=on_press)
@@ -425,6 +465,19 @@ def write_feature():
         mouse_event={"Mouse Clicks":len(mouse_click)}
         print(mouse_event,"mouse_event")
 
+        if (len(key_press) == 0 ) and (len(mouse_click) == 0):
+            mouse_key = Thread( target = get_mouse_and_keyboard_movement(len(key_press),len(mouse_click)))
+            print("--------------------- function return value",mouse_key)
+            timer=int(60)   
+            while (timer != 0 ):
+                if (len(key_press) >= 1 ) or (len(mouse_click) >= 1):
+                    print("i am working in if condition")
+                    break
+                timer=timer-1
+                time.sleep(1)
+                print("++++++++++++++++++++++++++++++++++ timer",timer)
+        else:
+            print("i am working now")
 
         mouse_click=[]
         key_press=[]
@@ -503,7 +556,8 @@ def start_thread():
     nd= str(shiftEndAt)
     n0= str(start_time)
 
-    if start_time>=st and start_time<nd:
+    # if start_time>=st and start_time<nd:
+    if start_time:
         global stop
         stop = 0
         # Create and launch a thread 
@@ -723,7 +777,6 @@ else:
 
 
 # Start the index.html file
-
 
 
 

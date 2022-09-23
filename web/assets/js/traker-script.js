@@ -139,7 +139,6 @@ $(window).load(function() {
     if(check==true){
       window.resizeTo(570, 410);
       
-
     }
     setTimeout(function(){
       var today=localStorage.getItem("today");
@@ -321,8 +320,6 @@ $(window).load(function() {
         }
           })
       });
-
-
  });
 
 
@@ -334,8 +331,60 @@ function onReady() {
     window.open("http://localhost:1111/","myWindow","dialog=yes,resizable=0");
 }
 
+$(document).ready(function(){
+  $(".toaster").hide()
+  eel.expose(say_hello_js); // Expose this function to Python
+  eel.expose(get_timer_js);
+  function say_hello_js(x) {
+      if (x){
+          document.getElementById("error").style.display = 'block';
+          //document.getElementById("error").fadeOut(3000);
+          //$(".toaster").fadeOut(5000)
+          //$('.toaster').fadeIn('fast').delay(1000).fadeOut('fast');
+          //$('.toaster').fadeIn('fast').delay(1000).fadeOut('fast');
+          $('.toaster').fadeIn('slow').delay(3000).hide(0);
+          //$('.toaster').fadeIn('slow').delay(1000).hide(0);
+          console.log("i am in if condition" + x);
+      }else{
+          $(".toaster").hide()
+          //document.getElementById("error").style.display = 'none';
+          console.log("i am in else condition" + x);
+      }
+  }
+  say_hello_js("Javascript World!");
 
+  function get_timer_js(key_press,mouse_click){
+    console.log("+++++++++++ key_press" + key_press)
+    console.log("+++++++++++ mouse_click" + mouse_click)
+    if ((key_press == 0 ) && (mouse_click == 0 )){
+      swal({
+        title: 'Are you still working ?',
+        showCancelButton: true,
+        showConfirmButton: true,
+        confirmButtonText: 'Yes',
+        cancelButtonText: 'No',
+        confirmButtonClass: 'btn btn-success',
+        cancelButtonClass: 'btn btn-danger',
+        type: 'warning',
+        buttonsStyling: false
+    }).then(function (yes) {
+        // Called if you click Yes.
+        if (yes) {
+            // Make Ajax call.
+            swal('Your Work is continues', '', 'success');
+        }
+    },
+    function (no) {
+        // Called if you click No.
+        if (no == 'cancel') {
+            swal('Your work has been stoped', '', 'error');
+        }
+    });
 
-
-
+      console.log("i am in if condition")
+    }else{
+      console.log("i am in else condition")
+    }
+  }
+})
 

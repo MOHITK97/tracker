@@ -16,8 +16,21 @@ $(document).ready(function(){
       $(location).prop('href', url);
 
       }
+
+      if(done == "email"){
+        alert("please enter the email")
+      }
+
+      else if(done == "password"){
+        alert("please enter the password")
+      }
+
+      else if(done == "email & password"){
+        alert("please enter the email and password")
+      }
+
       else{
-        alert("please enter valid details")
+        alert("please enter the email and password")
         $('.email').val('');
         $('.password').val('');
 
