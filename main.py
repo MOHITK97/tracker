@@ -189,28 +189,30 @@ def random_login(email,password):
         return done
 
     else:
+        now = datetime.now()
+        current_time =now.strftime("%Y-%m-%d %H:%M:%S")
         check=data['success']
         checks=data['token']
         shiftStartAt=data['user']['shiftStartAt']
         shiftEndAt=data['user']['shiftEndAt']
-        print(shiftStartAt,shiftEndAt,"shiftEndAtshiftEndAtshiftEndAtshiftEndAt")
-        final.update({"token":checks,"trackid":"-","date":"-","shiftStartAt":shiftStartAt,"shiftEndAt":shiftEndAt,"break":"-"})
-        if check==True:
-            json_object = json.dumps(final, indent=1)
-        
-            # Writing to sample.json
-            with open("data.json", "w") as outfile:
-                outfile.write(json_object)
-            done="success"
-            print(done,"doneeeee")
+        if current_time >= shiftStartAt and current_time <= shiftEndAt :
+            done="Your shift is already Started"
             return done
         else:
-            done="error"
-            print(done,"doneeeee++++++++++")
-            return done
-        # except:
-        #     done="error"
-        #     return done
+            final.update({"token":checks,"trackid":"-","date":"-","shiftStartAt":shiftStartAt,"shiftEndAt":shiftEndAt,"break":"-"})
+            if check==True:
+                json_object = json.dumps(final, indent=1)
+            
+                # Writing to sample.json
+                with open("data.json", "w") as outfile:
+                    outfile.write(json_object)
+                done="success"
+                print(done,"doneeeee")
+                return done
+            else:
+                done="error"
+                print(done,"doneeeee++++++++++")
+                return done
 
 @eel.expose
 def breakend():

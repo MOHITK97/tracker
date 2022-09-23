@@ -28,7 +28,9 @@ $(document).ready(function(){
       else if(done == "email & password"){
         alert("please enter the email and password")
       }
-
+      else if(done == "Your shift is already Started"){
+        alert("Your shift is already Started")
+      }
       else{
         alert("please enter the email and password")
         $('.email').val('');
