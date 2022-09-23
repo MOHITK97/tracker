@@ -26,6 +26,35 @@ def close_callback(route, websockets):
         print('Bye!')
         exit()
 
+
+#get local time function
+
+def local_time(shiftStartAt, shiftEndAt):
+    now = datetime.now()
+    start_time = now.strftime("%Y-%m-%d %H:%M:%S")
+    shiftStartAt =shiftStartAt.replace("T"," ")
+    shiftEndAt =shiftEndAt.replace("T"," ")
+
+    shiftStartAt = shiftStartAt.split('.')[0]
+    shiftEndAt = shiftEndAt.split('.')[0]
+    format  = "%Y-%m-%d %H:%M:%S"
+
+    shiftStartAt = datetime.strptime(shiftStartAt, format)
+    shiftEndAt = datetime.strptime(shiftEndAt, format)
+
+    shiftStartAt = shiftStartAt.replace(tzinfo=from_zone)
+    shiftEndAt = shiftEndAt.replace(tzinfo=from_zone)
+
+    shiftStartAt = shiftStartAt.astimezone(to_zone)
+    shiftEndAt = shiftEndAt.astimezone(to_zone)
+    data={
+        "shiftStartAt":shiftStartAt,
+        "shiftEndAt":shiftEndAt
+    }
+    return data
+
+
+
 # get path Automatically
 basedir = os.path.dirname(os.path.abspath(__file__))
 categorization_file = os.path.join(basedir,'/web')
@@ -175,44 +204,52 @@ def random_login(email,password):
 
     if email == "" and password == "":
         done="email & password"
-        print(done)
         return done
 
     elif email == "":
         done="email"
-        print(done)
         return done
 
     elif password == "":
         done="password"
-        print(done)
         return done
 
     else:
-        now = datetime.now()
-        current_time =now.strftime("%Y-%m-%d %H:%M:%S")
-        check=data['success']
-        checks=data['token']
-        shiftStartAt=data['user']['shiftStartAt']
-        shiftEndAt=data['user']['shiftEndAt']
-        if current_time >= shiftStartAt and current_time <= shiftEndAt :
-            done="Your shift is already Started"
-            return done
+
+        if data['success'] == False:
+            if  data['msg'] == "Email or Password is Incorrect":
+                done = data['msg']
+                return done
         else:
-            final.update({"token":checks,"trackid":"-","date":"-","shiftStartAt":shiftStartAt,"shiftEndAt":shiftEndAt,"break":"-"})
-            if check==True:
-                json_object = json.dumps(final, indent=1)
-            
-                # Writing to sample.json
-                with open("data.json", "w") as outfile:
-                    outfile.write(json_object)
-                done="success"
-                print(done,"doneeeee")
+            now = datetime.now()
+            current_time =now.strftime("%Y-%m-%d %H:%M:%S")
+            check=data['success']
+            checks=data['token']
+            shiftStartAt=data['user']['shiftStartAt']
+            shiftEndAt=data['user']['shiftEndAt']
+            time = local_time(shiftStartAt,shiftEndAt)
+            start_time = time['shiftStartAt']
+            end_time = time['shiftEndAt']
+            print(start_time)
+            print(end_time)
+            if str(current_time) >= str(start_time) and str(current_time) <= str(end_time) :
+                done="Your shift is already Started"
                 return done
             else:
-                done="error"
-                print(done,"doneeeee++++++++++")
-                return done
+                final.update({"token":checks,"trackid":"-","date":"-","shiftStartAt":shiftStartAt,"shiftEndAt":shiftEndAt,"break":"-"})
+                if check==True:
+                    json_object = json.dumps(final, indent=1)
+                
+                    # Writing to sample.json
+                    with open("data.json", "w") as outfile:
+                        outfile.write(json_object)
+                    done="success"
+                    print(done,"doneeeee")
+                    return done
+                else:
+                    done="error"
+                    print(done,"doneeeee++++++++++")
+                    return done
 
 @eel.expose
 def breakend():
@@ -411,26 +448,26 @@ def write_feature():
         out_img = BytesIO()
         img.save(out_img, format='png')
         out_img.seek(0)
-        # if len(mouse_click)==0 and len(key_press) ==0:
-        #     checkidtm=checkidtm+1
-        #     if checkidtm==idealTimeIntervalInMinutes:
-        #         nows = datetime.now()
-        #         start_times = now.strftime("%H:%M")
-        #         bb=start_times.split(":")[0]
-        #         cc=start_times.split(":")[1]
+        if len(mouse_click)==0 and len(key_press) ==0:
+            checkidtm=checkidtm+1
+            if checkidtm==idealTimeIntervalInMinutes:
+                nows = datetime.now()
+                start_times = now.strftime("%H:%M")
+                bb=start_times.split(":")[0]
+                cc=start_times.split(":")[1]
 
-        #         if cc !="00":
-        #             cc=int(cc)-checkidtm
-        #             start_times=str(bb)+":"+str(cc)
-        #         global idlsttm
-        #         idlsttm=start_times
-        #         print(idlsttm,"ideal time started")
-        #         t3 = Thread (target = popup())
-        #         t3.start()
+                if cc !="00":
+                    cc=int(cc)-checkidtm
+                    start_times=str(bb)+":"+str(cc)
+                global idlsttm
+                idlsttm=start_times
+                print(idlsttm,"ideal time started")
+                t3 = Thread (target = popup())
+                t3.start()
 
 
-        # else:
-        #     checkidtm=0
+        else:
+            checkidtm=0
 
 
 

@@ -31,6 +31,11 @@ $(document).ready(function(){
       else if(done == "Your shift is already Started"){
         alert("Your shift is already Started")
       }
+
+      else if(done == "Email or Password is Incorrect"){
+        alert("Email or Password is Incorrect")
+      }
+
       else{
         alert("please enter the email and password")
         $('.email').val('');
