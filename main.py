@@ -169,7 +169,7 @@ def sendscreenshot(start_time,end_time,cll,kss,body):
             res = "done"
             td = Thread (target = take_screenshot(res))
             td.start()  
-   except requests.ConnectionError as e:
+    except requests.ConnectionError as e:
         print("OOPS!! Connection Error. Make sure you are connected to Internet. Technical Details given below.\n")
         print(str(e))   
         sendscreenshot(start_time,end_time,cll,kss,body)         
