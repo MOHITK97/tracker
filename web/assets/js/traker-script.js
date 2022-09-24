@@ -353,9 +353,10 @@ $(document).ready(function(){
   eel.expose(say_hello_js); // Expose this function to Python
   eel.expose(get_timer_js);
   function say_hello_js(x) {
-      if (x){
-          document.getElementById("error").style.display = 'block';
-          //document.getElementById("error").fadeOut(3000);
+      if (x == "done"){
+          // document.getElementById("error").style.display = 'block';
+          
+         //document.getElementById("error").fadeOut(3000);
           //$(".toaster").fadeOut(5000)
           //$('.toaster').fadeIn('fast').delay(1000).fadeOut('fast');
           //$('.toaster').fadeIn('fast').delay(1000).fadeOut('fast');

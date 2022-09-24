@@ -125,10 +125,14 @@ def random_python():
     return randint(1,100)
 
 @eel.expose
-def take_screenshot():
-    eel.say_hello_js('function call form Python function')
-    pass
-
+def take_screenshot(res):
+    if res == "done":
+        eel.say_hello_js(res)
+        pass
+    else:
+        res = "error"
+        eel.say_hello_js(res)
+        
 # eel.start('traker.html')
 
 
@@ -161,9 +165,11 @@ def sendscreenshot(start_time,end_time,cll,kss,body):
     # print("--------------- screent short",files)
     try:
         response = requests.request("POST", url, headers=headers, data=payload, files=files)
-        td = Thread (target = take_screenshot)
-        td.start()
-    except requests.ConnectionError as e:
+        if files:
+            res = "done"
+            td = Thread (target = take_screenshot(res))
+            td.start()  
+   except requests.ConnectionError as e:
         print("OOPS!! Connection Error. Make sure you are connected to Internet. Technical Details given below.\n")
         print(str(e))   
         sendscreenshot(start_time,end_time,cll,kss,body)         
