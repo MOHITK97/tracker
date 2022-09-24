@@ -37,7 +37,6 @@ $(document).ready(function(){
       }
 
       else{
-        alert("please enter the email and password")
         $('.email').val('');
         $('.password').val('');
 

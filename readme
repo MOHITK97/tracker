@@ -1,6 +1,7 @@
 # create a build using 
 
-python3 -m eel main.py web --onefile --noconsole
+python3 -m eel main.py web --onefile --noconsole --name=Tracker
+python pyinstaller.py --name=studio
 
 # install requirement
 

@@ -199,7 +199,6 @@ def random_login(email,password):
     }
 
     response = requests.post(url, headers=headers, data=payload)
-    print(">>>>>>>>>>>>>>>>>>>>>>>>>>>",response.json())
     data=response.json()
 
     if email == "" and password == "":
