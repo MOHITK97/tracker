@@ -32,13 +32,6 @@ $(window).load(function() {
 
    })
 
-$(window).load(function() {
-
-    eel.breaktime()(function(breaktime){
-    localStorage.setItem("breaktime", breaktime);
- 
- 
-    })
     
  eel.cwwd()(function(token){
       // alert(token)
@@ -86,13 +79,6 @@ $(window).load(function() {
           localStorage.setItem("getThisMonthHours", call(response.getThisMonthHours[0].minutes));
         }
 
-
-        if(response.getBreakTime[0].minutes==0){
-          localStorage.setItem("getBreakTime", "00:00");
-        }
-        else{
-          localStorage.setItem("getBreakTime", call(response.getBreakTime[0].minutes));
-        }
         
 
         
@@ -194,10 +180,6 @@ $(window).load(function() {
 
        $("#brleft .brleft").html("00:"+brleft+" min");
 
-
-       var breaktime = localStorage.getItem("breaktime");
-
-       $("#breaktime .breaktime").html("00:"+breaktime+" min");
     
     
 
