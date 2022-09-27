@@ -79,7 +79,6 @@ def visitedweb():
 
 
     outputs = get_history()
-    print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",outputs)
     his = outputs.histories
     current_time = datetime.now()
     current_time=current_time.date().strftime('%y-%m-%d')
@@ -90,22 +89,18 @@ def visitedweb():
     data.update({"trackingId":trackid})
     visitedSites=[]
     for i in his:
-        # try:
-        if str(current_time) in str(i[0]):
-            print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",str(i[0]))
-            print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",str(current_time))
-            ch=str(i[0]).split(' ')[0]
-            print("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<ch",ch)
-            st=shiftStartAt.split("T")[0]
-            en=shiftEndAt.split("T")[0]
-            if str(ch) == str(st) or str(ch) == str(en):
-                visitedSites.append({str(i[0]).split('+')[0]:str(i[1])})
-        else:
+        try:
+            if str(current_time) in str(i[0]):
+                ch=str(i[0]).split(':')[0]
+                st=shiftStartAt.replace("T"," ")
+                en=shiftEndAt.replace("T"," ")
+                st = st.split(':')[0]
+                en = st.split(':')[0]
+                print(en,st)
+                if str(ch) >= str(st) or str(ch) <=str (en):
+                    visitedSites.append({str(i[0]).split('+')[0]:str(i[1])})
+        except:
             pass
-        # except:
-        #     print("not working")
-        #     pass
-    print(">>>>>>>>>>>>>>>>>>>>>>>",visitedSites)
     data.update({"visitedSites":visitedSites})
     print("visitedweb---",data)
 
@@ -152,33 +147,42 @@ def sendscreenshot(start_time,end_time,cll,kss,body):
     for i in old:
         trackid=old['trackid']
         token=old['token']
+        shiftStartAt=old['shiftStartAt']
+        shiftEndAt=old['shiftEndAt']
         print(token)
         print(trackid)
     url = "https://timedoctor.niraginfotech.com/api/user/send/screenshot"
 
-    web = Thread (target = visitedweb())
-    web.start()
+    outputs = get_history()
+    his = outputs.histories
+    current_times = datetime.now()
+    current_times=current_times.date().strftime('%y-%m-%d')
+    shiftStartAt=shiftStartAt
+    shiftEndAt=shiftEndAt
+    z=0
+    visitedSites=[]
+    for i in his:
+        try:
+            if str(current_times) in str(i[0]):
+                ch=str(i[0]).split(':')[0]
+                st=shiftStartAt.replace("T"," ")
+                en=shiftEndAt.replace("T"," ")
+                st = st.split(':')[0]
+                en = st.split(':')[0]
+                print(en,st)
+                if str(ch) >= str(st) or str(ch) <=str (en):
+                    visitedSites.append({str(i[0]).split('+')[0]:str(i[1])})
+        except:
+            pass
 
-    print("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++web",web)
-
-    try:
-        payload={'trackedTimeId': trackid,
-        'trackingScreenShotStartTime': str(start_time),
-        'trackingScreenShotEndTime': str(end_time),
-        'mouseActivity': cll,
-        'keywordActivity': kss,
-        'activityLevel': '10',
-        'visitedWebsites': web
-        }
-    except:
-        payload={'trackedTimeId': trackid,
-        'trackingScreenShotStartTime': str(start_time),
-        'trackingScreenShotEndTime': str(end_time),
-        'mouseActivity': cll,
-        'keywordActivity': kss,
-        'activityLevel': '10',
-        'visitedWebsites': ['']
-        }
+    payload={'trackedTimeId': trackid,
+    'trackingScreenShotStartTime': str(start_time),
+    'trackingScreenShotEndTime': str(end_time),
+    'mouseActivity': cll,
+    'keywordActivity': kss,
+    'activityLevel': '10',
+    'visitedWebsites': visitedSites
+    }
     files=[
       ('image',('test.png',body,'image/png'))
     ]
@@ -335,9 +339,9 @@ def breakend():
     with open("data.json", "w") as outfile:
         outfile.write(json_object)
 
-# @eel.expose
-# def popup():
-#     print("go")
+@eel.expose
+def popup():
+    print("go")
 
 
 
