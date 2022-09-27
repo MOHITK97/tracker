@@ -4,7 +4,7 @@
  "date": "27/09/2022",
  "shiftStartAt": "2022-09-26T06:00:00.147Z",
  "shiftEndAt": "2022-09-27T20:30:00.319Z",
- "break": "true",
+ "break": "-",
  "screenshotInterval": "1",
  "idealTimeInterval": "3"
 }

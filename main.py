@@ -174,7 +174,7 @@ def sendscreenshot(start_time,end_time,cll,kss,body):
                     visitedSites.append({str(i[0]).split('+')[0]:str(i[1])})
         except:
             pass
-
+    print(visitedSites)
     payload={'trackedTimeId': trackid,
     'trackingScreenShotStartTime': str(start_time),
     'trackingScreenShotEndTime': str(end_time),
@@ -412,7 +412,6 @@ def write_feature():
         screenshotTime =old['screenshotInterval']
         idealTimeInterval =old['idealTimeInterval']
 
-    print("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++=screenshotTime",int(screenshotTime))
     if br=="true":
         # break end thread
         t = Thread (target = breakend)
@@ -428,8 +427,15 @@ def write_feature():
     # idldata=response.json()
     # idealTimeIntervalInMinutes=idldata['userSetting']['idealTimeInterval']
     # screenshotTimeIntervalInMinutes=idldata['userSetting']['screenshotInterval'] 
-    idealTimeIntervalInMinutes=1
-    screenshotTimeIntervalInMinutes= 1
+    try:
+        idealTimeIntervalInMinutes= int(idealTimeInterval)
+    except:
+        idealTimeIntervalInMinutes = 1
+    try:
+        screenshotTimeIntervalInMinutes= int(screenshotTime)
+    except:
+        screenshotTimeIntervalInMinutes = 1
+
 
     if olddate!=newdate:
 
