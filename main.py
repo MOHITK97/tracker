@@ -246,8 +246,11 @@ def random_login(email,password):
             idealTimeInterval =   data['user']['idealTimeInterval']
             print(start_time)
             print(end_time)
-            # if str(current_time) >= str(start_time) and str(current_time) <= str(end_time) :
-            #     done="Your shift is already Started"
+            # if str(current_time) >= str(start_time) :
+            #     done="Your shift is not started"
+            #     return done
+            # elif str(current_time) <= str(end_time) :
+            #     done= "Your shift is ended"
             #     return done
             # else:
             final.update({"token":checks,"trackid":"-","date":"-","shiftStartAt":shiftStartAt,"shiftEndAt":shiftEndAt,"break":breakTime,
@@ -396,7 +399,7 @@ def write_feature():
     # idealTimeIntervalInMinutes=idldata['userSetting']['idealTimeInterval']
     # screenshotTimeIntervalInMinutes=idldata['userSetting']['screenshotInterval'] 
     idealTimeIntervalInMinutes=1
-    screenshotTimeIntervalInMinutes=1
+    screenshotTimeIntervalInMinutes= int(screenshotTime)
 
     if olddate!=newdate:
 

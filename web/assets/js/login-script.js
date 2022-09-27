@@ -31,9 +31,12 @@ $(document).ready(function(){
       else if(done == "Your shift is already Started"){
         alert("Your shift is already Started")
       }
+      else if(done == "Your shift is already Started"){
+        alert("Your shift is already Started")
+      }
 
-      else if(done == "Email or Password is Incorrect"){
-        alert("Email or Password is Incorrect")
+      else if(done == "Your shift is ended"){
+        alert("Your shift is ended")
       }
 
       else{
