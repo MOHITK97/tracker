@@ -149,13 +149,17 @@ def sendscreenshot(start_time,end_time,cll,kss,body):
         print(trackid)
     url = "https://timedoctor.niraginfotech.com/api/user/send/screenshot"
 
+    t1 = Thread (target = visitedweb())
+    t1.start()
+
     payload={'trackedTimeId': trackid,
     'trackingScreenShotStartTime': str(start_time),
     'trackingScreenShotEndTime': str(end_time),
     'mouseActivity': cll,
     'keywordActivity': kss,
     'activityLevel': '10',
-    'visitedWebsites': '[{}]'}
+    'visitedWebsites': [t1]
+    }
     files=[
       ('image',('test.png',body,'image/png'))
     ]
@@ -165,6 +169,8 @@ def sendscreenshot(start_time,end_time,cll,kss,body):
     # print("--------------- screent short",files)
     try:
         response = requests.request("POST", url, headers=headers, data=payload, files=files)
+        data = response.json()
+        print("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++",data['msg'])
         if files:
             res = "done"
             td = Thread (target = take_screenshot(res))
@@ -235,26 +241,30 @@ def random_login(email,password):
             time = local_time(shiftStartAt,shiftEndAt)
             start_time = time['shiftStartAt']
             end_time = time['shiftEndAt']
+            breakTime = data['user']['breakTime']
+            screenshotInterval =  data['user']['screenshotInterval']
+            idealTimeInterval =   data['user']['idealTimeInterval']
             print(start_time)
             print(end_time)
-            if str(current_time) >= str(start_time) and str(current_time) <= str(end_time) :
-                done="Your shift is already Started"
+            # if str(current_time) >= str(start_time) and str(current_time) <= str(end_time) :
+            #     done="Your shift is already Started"
+            #     return done
+            # else:
+            final.update({"token":checks,"trackid":"-","date":"-","shiftStartAt":shiftStartAt,"shiftEndAt":shiftEndAt,"break":breakTime,
+                            "screenshotInterval":screenshotInterval,"idealTimeInterval":idealTimeInterval})
+            if check==True:
+                json_object = json.dumps(final, indent=1)
+            
+                # Writing to sample.json
+                with open("data.json", "w") as outfile:
+                    outfile.write(json_object)
+                done="success"
+                print(done,"doneeeee")
                 return done
             else:
-                final.update({"token":checks,"trackid":"-","date":"-","shiftStartAt":shiftStartAt,"shiftEndAt":shiftEndAt,"break":"-"})
-                if check==True:
-                    json_object = json.dumps(final, indent=1)
-                
-                    # Writing to sample.json
-                    with open("data.json", "w") as outfile:
-                        outfile.write(json_object)
-                    done="success"
-                    print(done,"doneeeee")
-                    return done
-                else:
-                    done="error"
-                    print(done,"doneeeee++++++++++")
-                    return done
+                done="error"
+                print(done,"doneeeee++++++++++")
+                return done
 
 @eel.expose
 def breakend():
@@ -368,7 +378,8 @@ def write_feature():
         olddate=old['date']
         br=old['break']
         trackid=old['trackid']
-
+        screenshotTime =old['screenshotInterval']
+        idealTimeInterval =old['idealTimeInterval']
     if br=="true":
         # break end thread
         t = Thread (target = breakend)
@@ -386,13 +397,8 @@ def write_feature():
     # screenshotTimeIntervalInMinutes=idldata['userSetting']['screenshotInterval'] 
     idealTimeIntervalInMinutes=1
     screenshotTimeIntervalInMinutes=1
-        
-
-
-
 
     if olddate!=newdate:
-        print("nhi mili")
 
         print("shift start API hit kar")
         td = Thread (target = shiftstart)
@@ -473,13 +479,6 @@ def write_feature():
 
         else:
             checkidtm=0
-
-
-
-        #bad ka time
-
-        
-
 
         if stop == 1:
             break
@@ -661,9 +660,6 @@ def stop():
         trackid=old['trackid']
         shiftStartAt=old['shiftStartAt']
         shiftEndAt=old['shiftEndAt']
-        shiftStartAt="16:00"
-        shiftEndAt="24:00"
-
 
     now = datetime.now()
     start_time = now.strftime("%Y-%m-%d %H:%M:%S")
