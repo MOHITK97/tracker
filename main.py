@@ -212,6 +212,7 @@ def random_login(email,password):
 
     response = requests.post(url, headers=headers, data=payload)
     data=response.json()
+    print(">>>>>>>>>>>>>>>>>>>>>>>",data)
 
     if email == "" and password == "":
         done="email & password"
@@ -224,12 +225,16 @@ def random_login(email,password):
     elif password == "":
         done="password"
         return done
-
     else:
 
-        if data['success'] == False:
-            if  data['msg'] == "Email or Password is Incorrect":
-                done = data['msg']
+        try:
+            if data['success'] == False:
+                if  data['msg'] == "Email or Password is Incorrect":
+                    done = data['msg']
+                    return done
+        except:
+            if  data['errors']:
+                done = "Email is Invalid"
                 return done
         else:
             now = datetime.now()
@@ -246,28 +251,28 @@ def random_login(email,password):
             idealTimeInterval =   data['user']['idealTimeInterval']
             print(start_time)
             print(end_time)
-            # if str(current_time) >= str(start_time) :
-            #     done="Your shift is not started"
-            #     return done
-            # elif str(current_time) <= str(end_time) :
-            #     done= "Your shift is ended"
-            #     return done
-            # else:
-            final.update({"token":checks,"trackid":"-","date":"-","shiftStartAt":shiftStartAt,"shiftEndAt":shiftEndAt,"break":breakTime,
-                            "screenshotInterval":screenshotInterval,"idealTimeInterval":idealTimeInterval})
-            if check==True:
-                json_object = json.dumps(final, indent=1)
-            
-                # Writing to sample.json
-                with open("data.json", "w") as outfile:
-                    outfile.write(json_object)
-                done="success"
-                print(done,"doneeeee")
+            if str(current_time) < str(start_time) :
+                done="Your shift is not started"
+                return done
+            elif str(current_time) > str(end_time) :
+                done= "Your shift is ended"
                 return done
             else:
-                done="error"
-                print(done,"doneeeee++++++++++")
-                return done
+                final.update({"token":checks,"trackid":"-","date":"-","shiftStartAt":shiftStartAt,"shiftEndAt":shiftEndAt,"break":breakTime,
+                                "screenshotInterval":screenshotInterval,"idealTimeInterval":idealTimeInterval})
+                if check==True:
+                    json_object = json.dumps(final, indent=1)
+                
+                    # Writing to sample.json
+                    with open("data.json", "w") as outfile:
+                        outfile.write(json_object)
+                    done="success"
+                    print(done,"doneeeee")
+                    return done
+                else:
+                    done="error"
+                    print(done,"doneeeee++++++++++")
+                    return done
 
 @eel.expose
 def breakend():
