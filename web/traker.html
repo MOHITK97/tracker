@@ -17,38 +17,8 @@
     <script type="text/javascript" src='https://cdn.jsdelivr.net/sweetalert2/6.3.8/sweetalert2.min.js'></script>
     <link media="screen" rel="stylesheet" href='https://cdn.jsdelivr.net/sweetalert2/6.3.8/sweetalert2.min.css' />
     <link media="screen" rel="stylesheet" href='https://cdn.jsdelivr.net/sweetalert2/6.3.8/sweetalert2.css' />
-<style>
-    .toaster{
-        position: absolute;
-        width: 250px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: #27c26c;    box-shadow: 0 5px 16px 0 rgba(14, 15, 18, 0.32);          
-        height: 60px;
-        
-        color:rgb(255, 255, 255);
-        z-index: 99999;
-        border-left: 4px solid rgb(1, 75, 1);
-        top: 30px;
-        border-radius: 5px;
-        right: 0;
-    }
-    .toaster span{
-        font-size: 20px;
-        left: 28px;
-        top: 28%;
-        position: relative;
+    <!-- <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script> -->
 
-    }
-    .close_icon{
-        height:22px;
-        width:22px;
-        color:wihte;
-        padding-left: 40px;
-    }
-  
-</style>
 </head>
     <div class="toaster" id="error">
         <div class="texture"></div>
@@ -80,7 +50,7 @@
                 <ul>
                     <li><span class="tab-a active-a" data-id="tab1"><img src="assets/images/trak-watch.svg"></span></li>
                     <li> <a href = "" onclick="window.open('https://reliable-stroopwafel-6da05f.netlify.app/users')"><span class="tab-a" data-id="tab2"><img src="assets/images/Union.svg"></span></a></li>
-                    <li> <a href = "" onclick="window.open('https://reliable-stroopwafel-6da05f.netlify.app/users')"><span class="tab-a" data-id="tab3"><img src="assets/images/screenshot.svg"> </span></a></li>
+                    <li> <a class ="open_window" href = ""><span class="tab-a" data-id="tab3"><img src="assets/images/screenshot.svg"> </span></a></li>
                     <li><span class="tab-a" data-id="tab4"><img src="assets/images/settings.svg"></span></li>
                 </ul>
             </div><!--end of tab-menu-->
@@ -167,6 +137,7 @@
 <script src="https://code.jquery.com/jquery-migrate-1.4.1.min.js"></script>
     <script src="assets/js/traker-script.js"></script>
         <script type="text/javascript" src="../eel.js"></script>
+
 
 </body>
 

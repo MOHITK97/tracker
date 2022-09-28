@@ -471,3 +471,66 @@ button.d-btn.btn-primary:hover{
 .text-center{
     text-align: center;
 }
+
+
+.toaster{
+    position: absolute;
+    width: 250px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #27c26c;    box-shadow: 0 5px 16px 0 rgba(14, 15, 18, 0.32);          
+    height: 60px;
+    
+    color:rgb(255, 255, 255);
+    z-index: 99999;
+    border-left: 4px solid rgb(1, 75, 1);
+    top: 30px;
+    border-radius: 5px;
+    right: 0;
+}
+.toaster span{
+    font-size: 20px;
+    left: 28px;
+    top: 28%;
+    position: relative;
+
+}
+.close_icon{
+    height:22px;
+    width:22px;
+    color:wihte;
+    padding-left: 40px;
+}
+a{
+    cursor: pointer;
+}
+
+.swal2-confirm,.swal2-styled{
+    padding:10px 30px;
+    background-color:#27C26C !important;
+    border: none !important;
+    color: #fff;
+    margin-left:12px;
+}
+.swal2-cancel{
+    padding:10px 30px;
+    background-color:#000;
+    border: none !important;
+    color: #fff;
+    margin-left:12px;
+}
+.swal2-icon.swal2-warning {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    color: #e63509 !important;
+    border-color: #e63509 !important;
+    font-size: 50px !important;
+    line-height: 80px;
+    text-align: center;
+}
+.swal2-show{
+    width: 400px !important;
+}
+.swal2-title{
+    font-size: 24px !important;
+}

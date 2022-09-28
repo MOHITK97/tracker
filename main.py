@@ -298,9 +298,9 @@ def breakend():
     with open("data.json", "w") as outfile:
         outfile.write(json_object)
 
-# @eel.expose
-# def popup():
-#     print("go")
+@eel.expose
+def popup():
+    print("go")
 
 
 
@@ -346,10 +346,13 @@ def get_mouse_and_keyboard_movement(key_press,mouse_click):
     print("@@@@@@@@@@@@@@@@@@@ click getting from new function mouse click",mouse_click)
     
     if ((key_press == 0 ) and (mouse_click == 0 )):
+        print("+++++++ in main if ockntin------------------")
         eel.get_timer_js(key_press,mouse_click)
+        print("++++++ funtion run successfully")
         
-        return True
-    return False
+        
+        # return True
+    # return False
 
 @eel.expose
 def write_feature():
@@ -510,8 +513,9 @@ def write_feature():
         print(mouse_event,"mouse_event")
 
         if (len(key_press) == 0 ) and (len(mouse_click) == 0):
+            print("+++++++++++++++ i am inside the function ++++++++++++++++++")
             mouse_key = Thread( target = get_mouse_and_keyboard_movement(len(key_press),len(mouse_click)))
-            print("--------------------- function return value",mouse_key)
+            # print("--------------------- function return value",mouse_key)
             timer=int(60)   
             while (timer != 0 ):
                 if (len(key_press) >= 1 ) or (len(mouse_click) >= 1):
@@ -737,9 +741,9 @@ def logout():
 
 @eel.expose
 def breaktimeleft():
-    print("yffffffff")
+    print("break time left function run  +++++++++")
     try:
-        print("yhhhhhhh")
+        print("i am in break time left try function")
         now = datetime.now()
         time = now.strftime("%Y-%m-%d %H:%M:%S")
         old= open('data.json', 'r').read()
@@ -747,8 +751,6 @@ def breaktimeleft():
         for i in old:
             token=old['token']
             trackid=old['trackid']
-
-
 
         url = "https://timedoctor.niraginfotech.com/api/user/break/tracking/time/check"
 
