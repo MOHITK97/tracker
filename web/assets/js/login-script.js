@@ -29,11 +29,11 @@ $(document).ready(function(){
         alert("please enter the email and password")
       }
       else if(done == "Your shift is not started"){
-        alert("Your shift is not started")
+        alert("Your shift is not started now")
       }
 
       else if(done == "Your shift is ended"){
-        alert("Your shift is ended")
+        alert("Your shift is Completed now")
       }
 
       else if(done == "Email is Invalid"){

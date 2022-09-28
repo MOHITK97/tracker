@@ -17,6 +17,7 @@ import os
 from browser_history import get_history
 import ctypes
 from dateutil import tz
+import logging
 
 from_zone = tz.tzutc()
 to_zone = tz.tzlocal()
@@ -235,7 +236,6 @@ def random_login(email,password):
 
     response = requests.post(url, headers=headers, data=payload)
     data=response.json()
-    print(">>>>>>>>>>>>>>>>>>>>>>>",data)
 
     if email == "" and password == "":
         done="email & password"
@@ -487,7 +487,7 @@ def write_feature():
 
         for idls in range(1,screenshotTimeIntervalInMinutes+1):
             print(idls)
-            time.sleep(60)
+            time.sleep(screenshotTimeIntervalInMinutes)
         
 
         image = pyautogui.screenshot()

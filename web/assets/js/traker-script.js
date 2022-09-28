@@ -44,13 +44,15 @@ $(window).load(function() {
       },
     };
 
-    $.ajax(settings).done(function (response) {
+    $.ajax(settings).done(function (response) 
+    {
       var checks=response.success;
       console.log(response)
       //   console.log(response.getYesterDayHours[0].minutes)
       //   console.log(response.getThisWeekHours[0].minutes)
       //   console.log(response.getThisMonthHours[0].minutes)
-      if(checks==true){
+      if(checks==true)
+      {
         if(response.getTodayHours[0].minutes==0){
           localStorage.setItem("getTodayHours", "00:00");
         }
