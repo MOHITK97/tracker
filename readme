@@ -9,4 +9,6 @@ pip3 install - r requirement.txt
 
 # run code
 
-python3 main.py
+pyinstaller main.py
+
+pyinstaller <file_name>.py

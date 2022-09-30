@@ -73,11 +73,6 @@ def visitedweb():
         token=old['token']
         shiftStartAt=old['shiftStartAt']
         shiftEndAt=old['shiftEndAt']
-        print(shiftStartAt)
-        print(shiftEndAt)
-        print(token)
-        print(trackid)
-
 
     outputs = get_history()
     his = outputs.histories
@@ -103,7 +98,6 @@ def visitedweb():
         except:
             pass
     data.update({"visitedSites":visitedSites})
-    print("visitedweb---",data)
 
     url = "https://timedoctor.niraginfotech.com/api/user/add/tracking/website"
     payload = json.dumps(data)
@@ -142,7 +136,7 @@ def take_screenshot(res):
 
 @eel.expose
 def sendscreenshot(start_time,end_time,cll,kss,body):
-    print("++++++++++++++++++++++++++++++++++ screeen short working")
+    print("++++++++++++++++++++++++++++++++++ screeen short working ++++++++++++++++++++++++++++++++++")
     old= open('data.json', 'r').read()
     old=json.loads(old)
     for i in old:
@@ -150,8 +144,6 @@ def sendscreenshot(start_time,end_time,cll,kss,body):
         token=old['token']
         shiftStartAt=old['shiftStartAt']
         shiftEndAt=old['shiftEndAt']
-        print(token)
-        print(trackid)
     url = "https://timedoctor.niraginfotech.com/api/user/send/screenshot"
 
     outputs = get_history()
@@ -175,7 +167,6 @@ def sendscreenshot(start_time,end_time,cll,kss,body):
                     visitedSites.append({str(i[0]).split('+')[0]:str(i[1])})
         except:
             pass
-    print(visitedSites)
     payload={'trackedTimeId': trackid,
     'trackingScreenShotStartTime': str(start_time),
     'trackingScreenShotEndTime': str(end_time),
@@ -214,13 +205,6 @@ def sendscreenshot(start_time,end_time,cll,kss,body):
 def random_login(email,password):
     # try:
     final={}
-
-    print(email,"emailllllllll")
-    print(password,"passwordssssss")
-    print("Random function running")
-
-
-
     url = "https://timedoctor.niraginfotech.com/api/user/login"
 
     payload = json.dumps({
@@ -229,7 +213,6 @@ def random_login(email,password):
       "email": email,
       "password": password
     })
-    print(payload)
     headers = {
       'Content-Type': 'application/json'
     }
@@ -272,9 +255,7 @@ def random_login(email,password):
             breakTime = data['user']['breakTime']
             screenshotInterval =  data['user']['screenshotInterval']
             idealTimeInterval =   data['user']['idealTimeInterval']
-            print(start_time)
-            print(end_time)
-            if str(current_time) < str(start_time) :
+            if str(current_time) > str(start_time) :
                 done="Your shift is not started"
                 return done
             elif str(current_time) > str(end_time) :
@@ -290,11 +271,9 @@ def random_login(email,password):
                     with open("data.json", "w") as outfile:
                         outfile.write(json_object)
                     done="success"
-                    print(done,"doneeeee")
                     return done
                 else:
                     done="error"
-                    print(done,"doneeeee++++++++++")
                     return done
 
 @eel.expose
@@ -311,8 +290,6 @@ def breakend():
 
     now = datetime.now()
     current_time = now.strftime("%Y-%m-%d %H:%M:%S")
-
-    print("break end hit kar bhai")
     url = "https://timedoctor.niraginfotech.com/api/user/break/tracking/time/end"
 
     payload = json.dumps({
@@ -326,22 +303,17 @@ def breakend():
 
     response = requests.request("POST", url, headers=headers, data=payload)
 
-
-    print(response.text)
-
     old= open('data.json', 'r').read()
     old=json.loads(old)
     old.update({"break":"-"})
-    print(old)
     json_object = json.dumps(old, indent=1)
-    print(json_object)
     # Writing to sample.json
     with open("data.json", "w") as outfile:
         outfile.write(json_object)
 
-@eel.expose
-def popup():
-    print("go")
+# @eel.expose
+# def popup():
+#     print("go")
 
 
 
@@ -361,9 +333,6 @@ def shiftstart():
     }
 
     response = requests.request("POST", url, headers=headers, data=payload)
-    print(response.text)
-    print(current_time)
-
     data=response.json()
     trackid=data['data']['_id']
     today = datetime.now()
@@ -387,10 +356,13 @@ def get_mouse_and_keyboard_movement(key_press,mouse_click):
     print("@@@@@@@@@@@@@@@@@@@ click getting from new function mouse click",mouse_click)
     
     if ((key_press == 0 ) and (mouse_click == 0 )):
+        print("+++++++ in main if ockntin------------------")
         eel.get_timer_js(key_press,mouse_click)
+        print("++++++ funtion run successfully")
         
-        return True
-    return False
+        
+        # return True
+    # return False
 
 @eel.expose
 def write_feature():
@@ -438,8 +410,6 @@ def write_feature():
 
 
     if olddate!=newdate:
-
-        print("shift start API hit kar")
         td = Thread (target = shiftstart)
         td.start()
 
@@ -486,8 +456,8 @@ def write_feature():
         print(start_time,"start_timestart_time")
 
         for idls in range(1,screenshotTimeIntervalInMinutes+1):
-            print(idls)
-            time.sleep(screenshotTimeIntervalInMinutes)
+            screenshotTimesleep = screenshotTimeIntervalInMinutes*60
+            time.sleep(screenshotTimesleep)
         
 
         image = pyautogui.screenshot()
@@ -512,8 +482,8 @@ def write_feature():
                 global idlsttm
                 idlsttm=start_times
                 print(idlsttm,"ideal time started")
-                t3 = Thread (target = popup())
-                t3.start()
+                # t3 = Thread (target = popup())
+                # t3.start()
 
 
         else:
@@ -542,18 +512,14 @@ def write_feature():
 
         key_board={"keys Pressed":len(key_press)}
         #mouse
-        print(key_board,"key_board")
-
         mouse_event={"Mouse Clicks":len(mouse_click)}
-        print(mouse_event,"mouse_event")
 
         if (len(key_press) == 0 ) and (len(mouse_click) == 0):
             mouse_key = Thread( target = get_mouse_and_keyboard_movement(len(key_press),len(mouse_click)))
-            print("--------------------- function return value",mouse_key)
+            # print("--------------------- function return value",mouse_key)
             timer=int(60)   
             while (timer != 0 ):
                 if (len(key_press) >= 1 ) or (len(mouse_click) >= 1):
-                    print("i am working in if condition")
                     break
                 timer=timer-1
                 time.sleep(1)
@@ -601,9 +567,7 @@ def start_thread():
     old= open('data.json', 'r').read()
     old=json.loads(old)
     old.update({"shiftEndAt":shiftEndAt,"shiftEndAt":shiftEndAt})
-    print(old)
     json_object = json.dumps(old, indent=1)
-    print(json_object)
     # Writing to sample.json
     with open("data.json", "w") as outfile:
         outfile.write(json_object)
@@ -629,11 +593,6 @@ def start_thread():
 
     shiftStartAt = shiftStartAt.astimezone(to_zone)
     shiftEndAt = shiftEndAt.astimezone(to_zone)
-
-    print(shiftStartAt,"shiftStartAt")
-    print(shiftEndAt,"shiftEndAt")
-    print(start_time,"start_timestart_time")
-
     st= str(shiftStartAt)
     nd= str(shiftEndAt)
     n0= str(start_time)
@@ -647,7 +606,6 @@ def start_thread():
         t.start()
        
     else:
-        print('this is not your shift')
         return "error"
         
 
@@ -678,8 +636,6 @@ def breakstart():
     }
 
     response = requests.post(url, headers=headers, data=payload)
-
-    print(response.text)
     
     global stop
     stop = 1
@@ -718,39 +674,29 @@ def stop():
     shiftStartAt = shiftStartAt.astimezone(to_zone)
     shiftEndAt = shiftEndAt.astimezone(to_zone)
 
-    print(shiftStartAt,"shiftStartAt")
-    print(shiftEndAt,"shiftEndAt")
-    print(start_time,"start_timestart_time")
-
     st= str(shiftStartAt)
     nd= str(shiftEndAt)
     n0= str(start_time)
 
     if n0==st or n0==nd and n0>=st and n0<=nd:
-        print("you can not take break right now")
         done="noo"
         return done
 
     else:
         print(n0,st,nd,"ndddddddddddddddddddddd")
         if n0>=st and n0<=nd:
-            print("you can take break right now")
             t = Thread (target = breakstart)
             t.start()
 
             old= open('data.json', 'r').read()
             old=json.loads(old)
             old.update({"break":"true"})
-            print(old)
             json_object = json.dumps(old, indent=1)
-            print(json_object)
             # Writing to sample.json
             with open("data.json", "w") as outfile:
                 outfile.write(json_object)
             return done
         else:
-
-            print('This is not your shift time')
             done="not"
             # t = Thread (target = breakstart)
             # t.start()
@@ -772,9 +718,7 @@ def logout():
 
 @eel.expose
 def breaktimeleft():
-    print("yffffffff")
     try:
-        print("yhhhhhhh")
         now = datetime.now()
         time = now.strftime("%Y-%m-%d %H:%M:%S")
         old= open('data.json', 'r').read()
@@ -782,8 +726,6 @@ def breaktimeleft():
         for i in old:
             token=old['token']
             trackid=old['trackid']
-
-
 
         url = "https://timedoctor.niraginfotech.com/api/user/break/tracking/time/check"
 

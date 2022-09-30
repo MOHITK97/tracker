@@ -1,7 +1,7 @@
 function call(time){
 mtime=time;
 var hr=time/60;
-console.log("hr",hr)
+// console.log("hr",hr)
 var hr=parseInt(hr);
 var ch=hr*60
 var min=mtime-ch
@@ -25,9 +25,9 @@ return hr+":"+min
 
 $(window).load(function() {
 
-   eel.breaktimeleft()(function(brleft){
-   localStorage.setItem("brleft", brleft);
-   console.log(brleft,"brleftbrleft")
+  eel.breaktimeleft()(function(brleft){
+    localStorage.setItem("brleft", brleft);
+    console.log(brleft,"brleftbrleft")
 
 
    })
@@ -81,6 +81,12 @@ $(window).load(function() {
           localStorage.setItem("getThisMonthHours", call(response.getThisMonthHours[0].minutes));
         }
 
+        if(response.breakTime[0].breakTime==0){
+          localStorage.setItem("breakTime", "00:00");
+        }
+        else{
+          localStorage.setItem("breakTime", call(response.breakTime[0].breakTime));
+        }
         
 
         
@@ -173,10 +179,12 @@ $(window).load(function() {
       var getYesterDayHours=localStorage.getItem("getYesterDayHours");
       var getThisWeekHours = localStorage.getItem("getThisWeekHours");
       var getThisMonthHours = localStorage.getItem("getThisMonthHours");
+      var breakTime = localStorage.getItem("breakTime");
 
       $("#yesterday .time").html(getYesterDayHours+" hr")
       $("#thisweek .time").html(getThisWeekHours+" hr")
       $("#thismonth .time").html(getThisMonthHours+" hr")
+      $("#thisbreak .time").html(breakTime+" hr")
 
       var brleft = localStorage.getItem("brleft");
 
@@ -356,9 +364,10 @@ $(document).ready(function(){
   say_hello_js("Javascript World!");
 
   function get_timer_js(key_press,mouse_click){
-    console.log("+++++++++++ key_press" + key_press)
-    console.log("+++++++++++ mouse_click" + mouse_click)
-    if ((key_press == 0 ) && (mouse_click == 0 )){
+    // console.log("+++++++++++ key_press" + key_press)
+    // console.log("+++++++++++ mouse_click" + mouse_click)
+    if ((key_press == 0 ) && (mouse_click == 0)){
+      console.log("+++++++++++ now i am here")
       swal({
         title: 'Are you still working ?',
         showCancelButton: true,
@@ -383,10 +392,14 @@ $(document).ready(function(){
         }
     });
 
-      console.log("i am in if condition")
+      console.log("i am in if condition"+ x)
     }else{
       console.log("i am in else condition")
     }
   }
+  $(".open_window").on("click",function(){
+    window.open('https://reliable-stroopwafel-6da05f.netlify.app/users')
+})
+
 })
 
