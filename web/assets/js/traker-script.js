@@ -421,3 +421,16 @@ $(document).ready(function(){
     }
 }
 });
+
+
+
+jQuery(document).ready(function() {
+    
+  var url  = window.location.href;  
+  check =url.includes("script.html");
+  if(check==true){
+    window.resizeTo(570, 410);
+    
+  }
+  
+});

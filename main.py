@@ -907,29 +907,23 @@ except:
                                 '--incognito'])
 
 if len(token)>2:
+    eel.show("script.html")
+else:
+    pass
+
+if len(token)>2:
     eel.start('traker.html',size=(570, 410), 
                 position=(1000,1000), port=1111,
                 cmdline_args=[
                                 '--incognito']
 
                 )
-
-
-# elif len(token)>2:
-#     eel.show('script.html',size=(570, 410), 
-#                 position=(1000,1000), port=1111,
-#                 cmdline_args=[
-#                                 '--incognito']
-
-#                 )
 else:
     eel.start('traker-login.html',size=(580, 490), 
                 position=(1000,1000), port=1111,
                 cmdline_args=[
                                 '--incognito']
                 )
-
-    
 
 
 
