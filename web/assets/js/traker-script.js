@@ -403,3 +403,8 @@ $(document).ready(function(){
 
 })
 
+
+$(document).ready(function(){
+  $(".toaster").hide()
+  eel.expose(say_hello_js); // Expose this function to Python
+  eel.expose(get_timer_js);

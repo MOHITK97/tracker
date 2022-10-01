@@ -18,14 +18,19 @@ from browser_history import get_history
 import ctypes
 from dateutil import tz
 import logging
+from datetime import timedelta
+
 
 from_zone = tz.tzutc()
 to_zone = tz.tzlocal()
 
 def close_callback(route, websockets):
-    if not websockets:
-        print('Bye!')
-        exit()
+    try:
+        if not websockets:
+            print('Bye!')
+            exit()
+    except:
+        s.close()
 
 
 #get local time function
@@ -35,6 +40,7 @@ def local_time(shiftStartAt, shiftEndAt):
     start_time = now.strftime("%Y-%m-%d %H:%M:%S")
     shiftStartAt =shiftStartAt.replace("T"," ")
     shiftEndAt =shiftEndAt.replace("T"," ")
+
 
     shiftStartAt = shiftStartAt.split('.')[0]
     shiftEndAt = shiftEndAt.split('.')[0]
@@ -55,6 +61,30 @@ def local_time(shiftStartAt, shiftEndAt):
     return data
 
 
+def main():
+    olddate=""
+    trackid=""
+    token=""
+    old= open('data.json', 'r').read()
+    old=json.loads(old)
+    for i in old:
+        shiftStartAt=old['shiftStartAt']
+        shiftEndAt=old['shiftEndAt']
+
+    now = datetime.now()
+    current_time =now.strftime("%Y-%m-%d %H:%M:%S")
+    time = local_time(shiftStartAt,shiftEndAt)
+    start_time = time['shiftStartAt']
+    end_time = time['shiftEndAt']
+
+
+    if str(current_time) >= str(start_time):
+        shift_start = Thread (target = start_thread)
+        shift_start.start()
+
+    if str(current_time) >= str(end_time):
+        shift_end=  Thread (target = stop)
+        shift_end.stop()
 
 # get path Automatically
 basedir = os.path.dirname(os.path.abspath(__file__))
@@ -255,14 +285,17 @@ def random_login(email,password):
             breakTime = data['user']['breakTime']
             screenshotInterval =  data['user']['screenshotInterval']
             idealTimeInterval =   data['user']['idealTimeInterval']
-            if str(current_time) > str(start_time) :
+            print(str(current_time))
+            print(str(start_time))
+            print(str(shiftEndAt))
+            if str(current_time) <= str(start_time) :
                 done="Your shift is not started"
                 return done
             elif str(current_time) > str(end_time) :
                 done= "Your shift is ended"
                 return done
             else:
-                final.update({"token":checks,"trackid":"-","date":"-","shiftStartAt":shiftStartAt,"shiftEndAt":shiftEndAt,"break":breakTime,
+                final.update({"token":checks,"trackid":"-","date":"-","start_time":str(start_time),"end_time":str(end_time),"shiftStartAt":shiftStartAt,"shiftEndAt":shiftEndAt,"break":breakTime,
                                 "screenshotInterval":screenshotInterval,"idealTimeInterval":idealTimeInterval})
                 if check==True:
                     json_object = json.dumps(final, indent=1)
@@ -271,6 +304,11 @@ def random_login(email,password):
                     with open("data.json", "w") as outfile:
                         outfile.write(json_object)
                     done="success"
+
+                    try:
+                        value = main()
+                    except:
+                        pass
                     return done
                 else:
                     done="error"
@@ -278,18 +316,21 @@ def random_login(email,password):
 
 @eel.expose
 def breakend():
+    now = datetime.now()
+    current_time =now.strftime("%H:%M:%S")
     trackid=""
     token=""
     old= open('data.json', 'r').read()
     old=json.loads(old)
     for i in old:
         token=old['token']
+
         olddate=old['date']
         br=old['break']
         trackid=old['trackid']
+        start_time = old ['start_time']
+        end_time = old ['end_time']
 
-    now = datetime.now()
-    current_time = now.strftime("%Y-%m-%d %H:%M:%S")
     url = "https://timedoctor.niraginfotech.com/api/user/break/tracking/time/end"
 
     payload = json.dumps({
@@ -302,6 +343,8 @@ def breakend():
     }
 
     response = requests.request("POST", url, headers=headers, data=payload)
+    print("+++++++++++++++++++++++++++++++++++++++ breakend +++++++++++++++++++++++++++++++++++")
+    print(response)
 
     old= open('data.json', 'r').read()
     old=json.loads(old)
@@ -359,6 +402,18 @@ def get_mouse_and_keyboard_movement(key_press,mouse_click):
         print("+++++++ in main if ockntin------------------")
         eel.get_timer_js(key_press,mouse_click)
         print("++++++ funtion run successfully")
+        
+        
+        # return True
+    # return False
+
+
+@eel.expose
+def cant_take_break_1_hour(key_press,mouse_click):
+    print("++++++++++++++++++++++++++++++++++++++++++++++++++++++++ user cannot take break 1 hour before and after")
+    
+    eel.one_hour_break(key_press,mouse_click)
+    print("++++++ funtion run successfully")
         
         
         # return True
@@ -482,8 +537,8 @@ def write_feature():
                 global idlsttm
                 idlsttm=start_times
                 print(idlsttm,"ideal time started")
-                # t3 = Thread (target = popup())
-                # t3.start()
+                t3 = Thread (target = popup())
+                t3.start()
 
 
         else:
@@ -513,20 +568,29 @@ def write_feature():
         key_board={"keys Pressed":len(key_press)}
         #mouse
         mouse_event={"Mouse Clicks":len(mouse_click)}
+        
+        actual_ideal_time = ""
+
 
         if (len(key_press) == 0 ) and (len(mouse_click) == 0):
             mouse_key = Thread( target = get_mouse_and_keyboard_movement(len(key_press),len(mouse_click)))
             # print("--------------------- function return value",mouse_key)
-            timer=int(60)   
+            idealTimeIntervalInMinutes = int(idealTimeIntervalInMinutes*60)
+            timer=int(idealTimeIntervalInMinutes)
             while (timer != 0 ):
                 if (len(key_press) >= 1 ) or (len(mouse_click) >= 1):
                     break
                 timer=timer-1
+                mins, secs = divmod(timer, 60)
+                timers = '{:02d}:{:02d}'.format(mins, secs)
+                print(timers, end="\r")
+                actual_ideal_time = timers
                 time.sleep(1)
-                print("++++++++++++++++++++++++++++++++++ timer",timer)
+                print("++++++++++++++++++++++++++++++++++ no movement timer",timer)
         else:
             print("i am working now")
 
+        print("+++++++++++++++++++++++++++++++++++++++++actual_ideal_time",actual_ideal_time)
         mouse_click=[]
         key_press=[]
         listener.stop()
@@ -613,7 +677,7 @@ def start_thread():
 @eel.expose
 def breakstart():
     now = datetime.now()
-    start_time = now.strftime("%Y-%m-%d %H:%M:%S")
+    start_time = now.strftime("%H:%M:%S")
     trackid=""
     token=""
     old= open('data.json', 'r').read()
@@ -621,11 +685,39 @@ def breakstart():
     for i in old:
         token=old['token']
         trackid=old['trackid']
+        shiftEndAt=old['shiftEndAt']
+        shiftStartAt = old['shiftStartAt']
+        start_time=old['start_time']
+        end_time = old['end_time']
+
+    now = datetime.now()
+    current_time = now.strftime("%H:%M:%S")
+
+    end_time =  end_time.split(" ")[1]
+    end_time = end_time.split('+')[0]
+    end_time = datetime.strptime(end_time, "%H:%M:%S") - timedelta(hours=1, minutes=0)
+    end_time = end_time.strftime("%H:%M:%S")
+
+    start_time =  start_time.split(" ")[1]
+    start_time = start_time.split('+')[0]
+    start_time = datetime.strptime(start_time, "%H:%M:%S") + timedelta(hours=1, minutes=0)
+    start_time = start_time.strftime("%H:%M:%S")
+
+    if current_time > end_time:
+        msg = "end"
+        print(msg)
+        return msg
+
+    if current_time > start_time:
+        msg = "start"
+        print(msg)
+        return msg
 
     print("sucess")
 
     url = "https://timedoctor.niraginfotech.com/api/user/break/tracking/time/start"
 
+    print("++++++++++++++++++++++++++++++++++++++++++++++++++++",start_time)
     payload = json.dumps({
       "breakTimeStartAt": start_time,
       "trackedTimeId": trackid
@@ -635,7 +727,9 @@ def breakstart():
       'Content-Type': 'application/json'
     }
 
+
     response = requests.post(url, headers=headers, data=payload)
+    print("+++++++++++++++++++++++++++++++++++breakstart++++++++++++++++++++++++++++++=",response)
     
     global stop
     stop = 1
@@ -655,36 +749,24 @@ def stop():
         trackid=old['trackid']
         shiftStartAt=old['shiftStartAt']
         shiftEndAt=old['shiftEndAt']
+        start_times=old['start_time']
+        end_time = old['end_time']
 
     now = datetime.now()
     start_time = now.strftime("%Y-%m-%d %H:%M:%S")
-    shiftStartAt =shiftStartAt.replace("T"," ")
-    shiftEndAt =shiftEndAt.replace("T"," ")
 
-    shiftStartAt = shiftStartAt.split('.')[0]
-    shiftEndAt = shiftEndAt.split('.')[0]
-    format  = "%Y-%m-%d %H:%M:%S"
-
-    shiftStartAt = datetime.strptime(shiftStartAt, format)
-    shiftEndAt = datetime.strptime(shiftEndAt, format)
-
-    shiftStartAt = shiftStartAt.replace(tzinfo=from_zone)
-    shiftEndAt = shiftEndAt.replace(tzinfo=from_zone)
-
-    shiftStartAt = shiftStartAt.astimezone(to_zone)
-    shiftEndAt = shiftEndAt.astimezone(to_zone)
-
-    st= str(shiftStartAt)
-    nd= str(shiftEndAt)
+    st= str(start_times)
+    nd= str(end_time)
     n0= str(start_time)
+
 
     if n0==st or n0==nd and n0>=st and n0<=nd:
         done="noo"
         return done
 
     else:
-        print(n0,st,nd,"ndddddddddddddddddddddd")
         if n0>=st and n0<=nd:
+            print("++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Break started +++++++++++++++++++++++++++++++++++++++++++++++")
             t = Thread (target = breakstart)
             t.start()
 
@@ -697,6 +779,7 @@ def stop():
                 outfile.write(json_object)
             return done
         else:
+            print("++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Break not started +++++++++++++++++++++++++++++++++++++++++++++++")
             done="not"
             # t = Thread (target = breakstart)
             # t.start()
@@ -707,7 +790,7 @@ def stop():
 @eel.expose
 def logout():
     final={}
-    final.update({"token":"-","trackid":"-","date":"-","break":"-"})
+    final.update({"token":"-","trackid":"-","date":"-","break":"-","start_time":start_time,"end_time":end_time})
     json_object = json.dumps(final, indent=1)
  
     # Writing to sample.json
@@ -737,16 +820,19 @@ def breaktimeleft():
           'Authorization': 'Bearer '+token,
           'Content-Type': 'application/json'
         }
+        print("++++++++++++++++++++++++++++++++++++++++++++ breaktimeleft +++++++++++++++++++++++++++++++++++++++++")
 
         response = requests.request("POST", url, headers=headers, data=payload)
 
-        # print(response.text)
+        print(response.text)
 
         dd=response.json()
+        print("+++++++++++++++++++++++++++++++++++++++++==dd",dd)
 
         tleft=dd['minsLeft']
 
-        # print(tleft,type(tleft))
+        print(tleft,type(tleft))
+
         if tleft==None:
             tleft="00"
 

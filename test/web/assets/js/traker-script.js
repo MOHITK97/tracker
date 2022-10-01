@@ -116,6 +116,7 @@ document.querySelector("button").onclick = function () {
 }
 
 
+
 $(document).ready(function(){
   $("#form_id").submit(function(event){
     event.preventDefault();
@@ -139,4 +140,20 @@ $(document).ready(function(){
     })
     
   });
+});
+
+$(document).ready(function(){
+  $(".activate-button").click(function(){
+    eel.breakstart()(function(msg){
+
+      if (msg == "start"){
+        alert("you cannot take a break in last 1 hour")}
+      else{
+        alert("you cannot take a break in first 1 hour")
+      }
+
+    }
+  )
+  
+});
 });
