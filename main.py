@@ -24,6 +24,8 @@ from datetime import timedelta
 from_zone = tz.tzutc()
 to_zone = tz.tzlocal()
 
+global stop_call
+
 def close_callback(route, websockets):
     try:
         if not websockets:
@@ -124,9 +126,11 @@ def visitedweb():
                 en = st.split(':')[0]
                 print(en,st)
                 if str(ch) >= str(st) or str(ch) <=str (en):
-                    visitedSites.append({str(i[0]).split('+')[0]:str(i[1])})
+                    visitedSites.append({"time":str(i[0]).split('+')[0],
+                                        "url":str(i[1])})
         except:
             pass
+    visitedSites = json.dumps(visitedSites)
     data.update({"visitedSites":visitedSites})
 
     url = "https://timedoctor.niraginfotech.com/api/user/add/tracking/website"
@@ -282,6 +286,7 @@ def random_login(email,password):
             time = local_time(shiftStartAt,shiftEndAt)
             start_time = time['shiftStartAt']
             end_time = time['shiftEndAt']
+            # end_time = 
             breakTime = data['user']['breakTime']
             screenshotInterval =  data['user']['screenshotInterval']
             idealTimeInterval =   data['user']['idealTimeInterval']
@@ -330,6 +335,20 @@ def breakend():
         trackid=old['trackid']
         start_time = old ['start_time']
         end_time = old ['end_time']
+
+
+    now = datetime.now()
+    current_time = now.strftime("%H:%M:%S")
+
+    end_time =  end_time.split(" ")[1]
+    end_time = end_time.split('+')[0]
+    end_time = datetime.strptime(end_time, "%H:%M:%S") - timedelta(hours=1, minutes=0)
+    end_time = end_time.strftime("%H:%M:%S")
+
+    if current_time >= end_time:
+        msg = "end"
+        time = cant_take_break_1_hour(msg)
+        return msg
 
     url = "https://timedoctor.niraginfotech.com/api/user/break/tracking/time/end"
 
@@ -409,12 +428,9 @@ def get_mouse_and_keyboard_movement(key_press,mouse_click):
 
 
 @eel.expose
-def cant_take_break_1_hour(key_press,mouse_click):
+def cant_take_break_1_hour(msg):
     print("++++++++++++++++++++++++++++++++++++++++++++++++++++++++ user cannot take break 1 hour before and after")
-    
-    eel.one_hour_break(key_press,mouse_click)
-    print("++++++ funtion run successfully")
-        
+    eel.one_hour_break(msg)
         
         # return True
     # return False
@@ -569,35 +585,71 @@ def write_feature():
         #mouse
         mouse_event={"Mouse Clicks":len(mouse_click)}
         
-        actual_ideal_time = ""
+        actual_ideal_start_time = []
 
 
         if (len(key_press) == 0 ) and (len(mouse_click) == 0):
             mouse_key = Thread( target = get_mouse_and_keyboard_movement(len(key_press),len(mouse_click)))
             # print("--------------------- function return value",mouse_key)
-            idealTimeIntervalInMinutes = int(idealTimeIntervalInMinutes*60)
-            timer=int(idealTimeIntervalInMinutes)
+
+            timer=int(48000)
             while (timer != 0 ):
+                now = datetime.now()
+                current_time = now.strftime("%H:%M:%S")
+                if len(actual_ideal_start_time) == 0:
+                    actual_ideal_start_time.append(current_time)
+                    print("++++++++++++++++++++++actual_ideal_start_time",actual_ideal_start_time)
+                else:
+                    print("++++++++++++++++++++++elsepass")
+                    pass
+
                 if (len(key_press) >= 1 ) or (len(mouse_click) >= 1):
+                    now = datetime.now()
+                    current_time = now.strftime("%H:%M:%S")
+                    actual_ideal_end_time = current_time
                     break
+
                 timer=timer-1
-                mins, secs = divmod(timer, 60)
-                timers = '{:02d}:{:02d}'.format(mins, secs)
-                print(timers, end="\r")
-                actual_ideal_time = timers
+                
+                # actual_ideal_time = timers
                 time.sleep(1)
                 print("++++++++++++++++++++++++++++++++++ no movement timer",timer)
         else:
             print("i am working now")
 
-        print("+++++++++++++++++++++++++++++++++++++++++actual_ideal_time",actual_ideal_time)
+        try:
+            old= open('data.json', 'r').read()
+            old=json.loads(old)
+            for i in old:
+                token=old['token']
+                trackid=old['trackid']
+
+            url = "https://timedoctor.niraginfotech.com/api/user/ideal/tracking/time"
+            payload = json.dumps({
+            "idealTimeStartAt": str(actual_ideal_start_time[0]),
+            "trackedTimeId": trackid,
+            "idealTimeEndsAt":str(actual_ideal_end_time)
+            })
+            headers = {
+            'Authorization': 'Bearer '+token,
+            "Content-Type": "application/json; charset=utf-8"
+            }
+            response =  requests.request("POST",url, headers=headers, json=payload)
+            print("++++++++++++++++++++++++++++++++++++++++++++++++ Ideal Time Sent Successfully",response)
+            print("+++++++++++++++++++++++++++++++++++++++++actual_ideal_time",actual_ideal_start_time[0])
+            print("+++++++++++++++++++++++++++++++++++++++++actual_ideal_time",actual_ideal_end_time)
+        except:
+            pass
         mouse_click=[]
         key_press=[]
         listener.stop()
         key_listener.stop()
 
+
     listener.stop()
     key_listener.stop()
+
+
            
 
         # return done
@@ -668,7 +720,6 @@ def start_thread():
         # Create and launch a thread 
         t = Thread (target = write_feature)
         t.start()
-       
     else:
         return "error"
         
@@ -693,24 +744,17 @@ def breakstart():
     now = datetime.now()
     current_time = now.strftime("%H:%M:%S")
 
-    end_time =  end_time.split(" ")[1]
-    end_time = end_time.split('+')[0]
-    end_time = datetime.strptime(end_time, "%H:%M:%S") - timedelta(hours=1, minutes=0)
-    end_time = end_time.strftime("%H:%M:%S")
-
     start_time =  start_time.split(" ")[1]
     start_time = start_time.split('+')[0]
     start_time = datetime.strptime(start_time, "%H:%M:%S") + timedelta(hours=1, minutes=0)
     start_time = start_time.strftime("%H:%M:%S")
 
-    if current_time > end_time:
-        msg = "end"
-        print(msg)
-        return msg
+    print(start_time)
+    print(current_time)
 
-    if current_time > start_time:
+    if current_time <= start_time:
         msg = "start"
-        print(msg)
+        time = cant_take_break_1_hour(msg)
         return msg
 
     print("sucess")
@@ -730,8 +774,6 @@ def breakstart():
 
     response = requests.post(url, headers=headers, data=payload)
     print("+++++++++++++++++++++++++++++++++++breakstart++++++++++++++++++++++++++++++=",response)
-    
-    global stop
     stop = 1
 
 
@@ -786,11 +828,10 @@ def stop():
             return done
 
 
-
 @eel.expose
 def logout():
     final={}
-    final.update({"token":"-","trackid":"-","date":"-","break":"-","start_time":start_time,"end_time":end_time})
+    final.update({"token":"-","trackid":"-","date":"-","break":"-","start_time":"-","end_time":"-"})
     json_object = json.dumps(final, indent=1)
  
     # Writing to sample.json
@@ -872,6 +913,15 @@ if len(token)>2:
                                 '--incognito']
 
                 )
+
+
+# elif len(token)>2:
+#     eel.show('script.html',size=(570, 410), 
+#                 position=(1000,1000), port=1111,
+#                 cmdline_args=[
+#                                 '--incognito']
+
+#                 )
 else:
     eel.start('traker-login.html',size=(580, 490), 
                 position=(1000,1000), port=1111,

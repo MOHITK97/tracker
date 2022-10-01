@@ -406,5 +406,18 @@ $(document).ready(function(){
 
 $(document).ready(function(){
   $(".toaster").hide()
-  eel.expose(say_hello_js); // Expose this function to Python
-  eel.expose(get_timer_js);
+  eel.expose(one_hour_break);
+  function one_hour_break(x) {
+    if (x == "start"){
+        $('.toaster').fadeIn('slow');
+        alert("you cannot take a break in first 1 hour")
+    }
+    else if (x == "end"){
+      $(".toaster").fadeIn()
+      alert("you cannot take a break in last 1 hour")
+    }
+    else{
+        $(".toaster").hide()
+    }
+}
+});
