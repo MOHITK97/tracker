@@ -458,13 +458,32 @@ button.d-btn.btn-primary {
     cursor: pointer;
     font-family: 'Matter';
 }
-.login-form input[type="password"] {
-    background-image: url(../images/password-eye.svg);
+.login-form input[type="password"]{
+    /* background-image: url(../images/password-eye.svg); */
     background-repeat: no-repeat;
     background-position-x: calc(100% - 15px);
     background-position-y: center;
-    background-size: 20px;
+    background-size: 20px;  
 }
+
+.password{
+    position: relative;
+}
+i{
+    cursor:pointer;
+  }
+
+.p-viewer {
+    z-index: 9999;
+    position: absolute;
+    top: 20%;
+    right: 10px;
+}
+
+.fa-eye {
+	color: #000;
+}
+
 button.d-btn.btn-primary:hover{
     opacity: .8;
 }

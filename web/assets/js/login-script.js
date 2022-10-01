@@ -28,12 +28,16 @@ $(document).ready(function(){
       else if(done == "email & password"){
         alert("please enter the email and password")
       }
-      else if(done == "Your shift is already Started"){
-        alert("Your shift is already Started")
+      else if(done == "Your shift is not started"){
+        alert("Your shift is not started now")
       }
 
-      else if(done == "Email or Password is Incorrect"){
-        alert("Email or Password is Incorrect")
+      else if(done == "Your shift is ended"){
+        alert("Your shift is Completed now")
+      }
+
+      else if(done == "Email is Invalid"){
+        alert("Email is Invalid")
       }
 
       else{

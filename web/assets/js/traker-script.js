@@ -44,13 +44,15 @@ $(window).load(function() {
       },
     };
 
-    $.ajax(settings).done(function (response) {
+    $.ajax(settings).done(function (response) 
+    {
       var checks=response.success;
       console.log(response)
       //   console.log(response.getYesterDayHours[0].minutes)
       //   console.log(response.getThisWeekHours[0].minutes)
       //   console.log(response.getThisMonthHours[0].minutes)
-      if(checks==true){
+      if(checks==true)
+      {
         if(response.getTodayHours[0].minutes==0){
           localStorage.setItem("getTodayHours", "00:00");
         }
@@ -79,6 +81,12 @@ $(window).load(function() {
           localStorage.setItem("getThisMonthHours", call(response.getThisMonthHours[0].minutes));
         }
 
+        if(response.breakTime[0].breakTime==0){
+          localStorage.setItem("breakTime", "00:00");
+        }
+        else{
+          localStorage.setItem("breakTime", call(response.breakTime[0].breakTime));
+        }
         
 
         
@@ -171,10 +179,12 @@ $(window).load(function() {
       var getYesterDayHours=localStorage.getItem("getYesterDayHours");
       var getThisWeekHours = localStorage.getItem("getThisWeekHours");
       var getThisMonthHours = localStorage.getItem("getThisMonthHours");
+      var breakTime = localStorage.getItem("breakTime");
 
       $("#yesterday .time").html(getYesterDayHours+" hr")
       $("#thisweek .time").html(getThisWeekHours+" hr")
       $("#thismonth .time").html(getThisMonthHours+" hr")
+      $("#thisbreak .time").html(breakTime+" hr")
 
       var brleft = localStorage.getItem("brleft");
 
@@ -393,3 +403,34 @@ $(document).ready(function(){
 
 })
 
+
+$(document).ready(function(){
+  $(".toaster").hide()
+  eel.expose(one_hour_break);
+  function one_hour_break(x) {
+    if (x == "start"){
+        $('.toaster').fadeIn('slow');
+        alert("you cannot take a break in first 1 hour")
+    }
+    else if (x == "end"){
+      $(".toaster").fadeIn()
+      alert("you cannot take a break in last 1 hour")
+    }
+    else{
+        $(".toaster").hide()
+    }
+}
+});
+
+
+
+jQuery(document).ready(function() {
+    
+  var url  = window.location.href;  
+  check =url.includes("script.html");
+  if(check==true){
+    window.resizeTo(570, 410);
+    
+  }
+  
+});

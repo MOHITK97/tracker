@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Tracker</title>
+    <meta content="" name="descriptison">
+    <meta content="" name="keywords">
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Main CSS File -->
+    <link rel="stylesheet" type="text/css" href="assets/css/font-style.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/traker-window.css">
+    <link rel="shortcut icon" type="image/x-icon" href="assets/images/test.png">
+    <script type="text/javascript" src='https://cdn.jsdelivr.net/sweetalert2/6.3.8/sweetalert2.min.js'></script>
+    <link media="screen" rel="stylesheet" href='https://cdn.jsdelivr.net/sweetalert2/6.3.8/sweetalert2.min.css' />
+    <link media="screen" rel="stylesheet" href='https://cdn.jsdelivr.net/sweetalert2/6.3.8/sweetalert2.css' />
+    <!-- <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script> -->
+
+</head>
+    <div class="toaster" id="error">
+        <div class="texture"></div>
+        <span>Screenshot Taken <img class="close_icon" src="assets/images/close.png"></span>
+    </div>
+    <div class="traker-main">
+        <div class="traker-head">
+            <!-- <div class="trak-top-head">
+                <div class="traker-logo">
+                    Tracker
+                </div>
+                <div class="right-btn">
+                    <a class="minimize" href="#"><span></span></a>
+                    <a class="maximize" href="#"><span></span></a>
+                    <a class="close" href="#"><span></span> <span></span></a>
+                </div>
+            </div> -->
+            <div class="trak-menu">
+                <ul>
+                    <li><a href= "https://reliable-stroopwafel-6da05f.netlify.app/"  target="_blank" >Application</a></li>
+                    <li><a href="#">Help</a></li>
+                    <li class="Logout"><a>Logout</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="tab-form-wrap">
+            <div class="tab-menu">
+                <h4 class="user-first-name">N</h4>
+                <ul>
+                    <li><span class="tab-a active-a" data-id="tab1"><img src="assets/images/trak-watch.svg"></span></li>
+                    <li><a href = 'http://reliable-stroopwafel-6da05f.netlify.app/users' target="_blank" class="tab-a" data-id="tab5"><img src="assets/images/Union.svg"></a></li>
+                    <li> <a href = 'http://reliable-stroopwafel-6da05f.netlify.app/screenshotsw' target="_blank" class="tab-a" ><img src="assets/images/screenshot.svg"> </a></li>
+                    <li><span class="tab-a" data-id="tab4"><img src="assets/images/settings.svg"></span></li>
+
+                    <!-- <li> <a href = 'https://reliable-stroopwafel-6da05f.netlify.app/users'><span class="tab-a" data-id="tab2"><img src="assets/images/Union.svg"></span></a></li>
+                    <li> <a class ="open_window" href = ""><span class="tab-a" data-id="tab3"><img src="assets/images/screenshot.svg"> </span></a></li>
+                    <li><span class="tab-a" data-id="tab4"><img src="assets/images/settings.svg"></span></li> -->
+                </ul>
+            </div><!--end of tab-menu-->
+            <section class="tab tab-active"  data-id="tab1">
+                <div class="trak-info-section">
+                    <div class="company-info-bar">
+                        <p class="company-label">Company</p>
+                        <h4 class="company-name">Nirag Infotech</h4>
+                    </div>
+                    <div class="trak-status-bar">
+                        <h5 class="on-brake">On break</h5>
+                        <h5 class="on-working">Working</h5>
+                        <p class="time" id="display"></p>
+
+                        <p class="m-title"></p>
+
+                    </div>
+                    <div class="activate-button">
+                        <img class="pause" src="assets/images/pause.svg">
+                        <img class="play" src="assets/images/play.svg">
+                    </div>
+                </div>
+                <div class="total-trak-info">
+                    <div class="trak-info-row">
+                        <div id="thisbreak"><span>Max Break time</span><div class="time">00:00 hr</div></div>
+                        <hr>
+                        <div id="brleft"><span>Break time left</span><div class="brleft">00:45 min</div></div>
+                    </div>
+                    <div class="trak-info-row">
+                        <div id="yesterday"><span>Yesterday</span><div class="time">00:00 hr</div></div>
+                        <hr>
+                        <div id="thisweek"><span>This week</span><div class="time">00:00 hr</div></div>
+                        <hr>
+                        <div id="thismonth"><span>This month</span><div class="time">00:00 hr</div></div>
+                    </div>
+                </div>
+            </section>
+            <section class="tab" data-id="tab4">
+                <div class="info-wrap">
+                    <h4 class="tab-title">Activity bar</h4>
+                    <h4 class="m-titles">Visibility</h4>
+                    <form action="#">
+                        <p>
+                          <input type="radio" id="test1" name="radio-group" checked>
+                          <label for="test1">Visible</label>
+                        </p>
+                        <p>
+                          <input type="radio" id="test2" name="radio-group">
+                          <label for="test2">Hidden until 5am (in your time zone)</label>
+                        </p>
+                        <p>
+                          <input type="radio" id="test3" name="radio-group">
+                          <label for="test3">Hidden</label>
+                        </p>
+                    </form>
+
+                </div>
+                <div class="bottom-btn-wrap">
+                    <a href="#" class="btn-cancel">Cancel</a>
+                    <a href="#" class="btn-save">Save</a>
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+</html>

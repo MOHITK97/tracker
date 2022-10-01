@@ -44,14 +44,18 @@
             <div class="login-form">
                 <div class="input-wrap">
                     <label for="Email">Email</label>
-                    <input class="email" type="mail" name="email">
+                    <input class="email" type="email" name="email" required="" placeholder="Enter the email">
                     <span id="email"></span>
                 </div>
                 <div class="input-wrap">
                     <label for="Password">Password</label>
-                    <input class="password" id="typepass" type="password" name="password" onclick="Toggle()">
-                    <span id="password"></span>
-                </div>
+                    <input type="password" name="password" 
+                            class="password" 
+                            autocomplete="current-password" required="" placeholder="Enter the password"
+                            id="password">
+                            <span class="p-viewer"><i class="fas fa-eye-slash" id="eye"></i></span>
+                        </div>
+                    
                 <button type="submit" onclick="regValidation()" class="d-btn btn-primary">Sign In</button>
             </div>
             </form>
@@ -73,10 +77,10 @@
             eel.add(data_1, data_2)(call_Back)  
         }  
     </script>
-    <script>
+    <!-- <script>
         // Change the type of input to password or text
             function Toggle() {
-                var temp = document.getElementById("typepass");
+                var temp = document.getElementById("password");
                 if (temp.type === "password") {
                     temp.type = "text";
                 }
@@ -84,6 +88,31 @@
                     temp.type = "password";
                 }
             }
+    </script> -->
+
+    <script>
+        $(function(){
+            
+            $('#eye').click(function(){
+                
+                    if($(this).hasClass('fa-eye-slash')){
+                    
+                    $(this).removeClass('fa-eye-slash');
+                    
+                    $(this).addClass('fa-eye');
+                    
+                    $('#password').attr('type','text');
+                        
+                    }else{
+                    
+                    $(this).removeClass('fa-eye');
+                    
+                    $(this).addClass('fa-eye-slash');  
+                    
+                    $('#password').attr('type','password');
+                    }
+                });
+            });
     </script>
 
     <script>
