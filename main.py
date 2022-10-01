@@ -296,7 +296,7 @@ def random_login(email,password):
             if str(current_time) <= str(start_time) :
                 done="Your shift is not started"
                 return done
-            elif str(current_time) > str(end_time) :
+            elif str(current_time) >= str(end_time) :
                 done= "Your shift is ended"
                 return done
             else:
@@ -906,10 +906,10 @@ except:
                         cmdline_args=[
                                 '--incognito'])
 
-if len(token)>2:
-    eel.show("script.html")
-else:
-    pass
+# if len(token)>2:
+#     eel.show("script.html")
+# else:
+#     pass
 
 if len(token)>2:
     eel.start('traker.html',size=(570, 410), 

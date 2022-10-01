@@ -9,6 +9,7 @@ $(document).ready(function(){
       eel.random_login(email,password)(function(done){
         console.log(done+"ppppppppppppppp")
 
+        
       if(done=="success"){
         var url = "traker.html";
 
