@@ -839,6 +839,25 @@ def logout():
         outfile.write(json_object)
     done="success"
     return done
+    
+@eel.expose
+def reset_password(rest_mail):
+    print("++++++++++++++++ email value here",rest_mail)
+    old= open('data.json', 'r').read()
+    old=json.loads(old)
+    for i in old:
+        token=old['token']
+    url = "https://timedoctor.niraginfotech.com/api/user/reset-password"
+
+    payload = json.dumps({
+          "email": str(rest_mail),
+        })
+    headers = {
+      'Content-Type': 'application/json'
+    }
+    response = requests.request("POST", url, headers=headers, data=payload)
+    json_response=response
+    return json_response
 
 @eel.expose
 def breaktimeleft():
