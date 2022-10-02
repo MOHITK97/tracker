@@ -5,7 +5,7 @@
 
 .traker-main {
     max-width: 550px;
-    margin: 10px auto;
+    /* margin: 10px auto; */
     font-family: 'Matter';
     border: 1px solid rgb(112 112 112 / 10%);
 }
@@ -38,6 +38,7 @@
     display: flex;
     align-items: center;
     list-style: none;
+    margin: 0;
 }
 
 .trak-menu ul li {
@@ -188,18 +189,18 @@ h4.user-first-name {
 .company-info-bar {
     background: #6D6F78;
     display: block;
-    padding: 20px 25px;
+    padding: 8px 25px;
     color: #fff;
 }
 
 .company-info-bar .company-label {
-    font-size: 20px;
+    font-size: 16px;
     opacity: .4;
     font-weight: 600;
 }
 
 .company-name {
-    font-size: 34px;
+    font-size: 30px;
     font-weight: 500;
 }
 
@@ -442,7 +443,7 @@ a.btn-cancel:hover {
     position: relative;
 }
 .login-form {
-    padding: 35px 80px;
+    padding: 22px 80px;
     margin: 0 auto;
 }
 

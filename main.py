@@ -293,31 +293,31 @@ def random_login(email,password):
             print(str(current_time))
             print(str(start_time))
             print(str(shiftEndAt))
-            if str(current_time) <= str(start_time) :
-                done="Your shift is not started"
-                return done
-            elif str(current_time) > str(end_time) :
-                done= "Your shift is ended"
+            # if str(current_time) <= str(start_time) :
+            #     done="Your shift is not started"
+            #     return done
+            # elif str(current_time) > str(end_time) :
+            #     done= "Your shift is ended"
+            #     return done
+            # else:
+            final.update({"token":checks,"trackid":"-","date":"-","start_time":str(start_time),"end_time":str(end_time),"shiftStartAt":shiftStartAt,"shiftEndAt":shiftEndAt,"break":breakTime,
+                            "screenshotInterval":screenshotInterval,"idealTimeInterval":idealTimeInterval})
+            if check==True:
+                json_object = json.dumps(final, indent=1)
+            
+                # Writing to sample.json
+                with open("data.json", "w") as outfile:
+                    outfile.write(json_object)
+                done="success"
+
+                try:
+                    value = main()
+                except:
+                    pass
                 return done
             else:
-                final.update({"token":checks,"trackid":"-","date":"-","start_time":str(start_time),"end_time":str(end_time),"shiftStartAt":shiftStartAt,"shiftEndAt":shiftEndAt,"break":breakTime,
-                                "screenshotInterval":screenshotInterval,"idealTimeInterval":idealTimeInterval})
-                if check==True:
-                    json_object = json.dumps(final, indent=1)
-                
-                    # Writing to sample.json
-                    with open("data.json", "w") as outfile:
-                        outfile.write(json_object)
-                    done="success"
-
-                    try:
-                        value = main()
-                    except:
-                        pass
-                    return done
-                else:
-                    done="error"
-                    return done
+                done="error"
+                return done
 
 @eel.expose
 def breakend():
@@ -931,5 +931,20 @@ else:
 
 
 
-					
-
+@eel.expose
+def rest_password(rest_mail):
+    print("++++++++++++++++ email value here",rest_mail)
+    url = "https://timedoctor.niraginfotech.com/api/reset-password"
+    
+    payload = json.dumps({
+          "email": rest_mail,
+        })
+    headers = {
+          'Content-Type': 'application/json'
+        }
+    response = requests.request("POST", url, headers=headers, data=payload)
+    json_response=response.json()
+    print("++++++++++++++++++",json_response)
+    
+    
+     
