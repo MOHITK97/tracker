@@ -298,24 +298,26 @@ def random_login(email,password):
                 return done
             elif str(current_time) >= str(end_time) :
                 done= "Your shift is ended"
-            final.update({"token":checks,"trackid":"-","date":"-","start_time":str(start_time),"end_time":str(end_time),"shiftStartAt":shiftStartAt,"shiftEndAt":shiftEndAt,"break":breakTime,
-                            "screenshotInterval":screenshotInterval,"idealTimeInterval":idealTimeInterval})
-            if check==True:
-                json_object = json.dumps(final, indent=1)
-            
-                # Writing to sample.json
-                with open("data.json", "w") as outfile:
-                    outfile.write(json_object)
-                done="success"
-
-                try:
-                    value = main()
-                except:
-                    pass
                 return done
             else:
-                done="error"
-                return done
+                final.update({"token":checks,"trackid":"-","date":"-","start_time":str(start_time),"end_time":str(end_time),"shiftStartAt":shiftStartAt,"shiftEndAt":shiftEndAt,"break":breakTime,
+                                "screenshotInterval":screenshotInterval,"idealTimeInterval":idealTimeInterval})
+                if check==True:
+                    json_object = json.dumps(final, indent=1)
+                
+                    # Writing to sample.json
+                    with open("data.json", "w") as outfile:
+                        outfile.write(json_object)
+                    done="success"
+
+                    try:
+                        value = main()
+                    except:
+                        pass
+                    return done
+                else:
+                    done="error"
+                    return done
 
 @eel.expose
 def breakend():

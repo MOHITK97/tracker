@@ -71,7 +71,7 @@
                             <span class="p-viewer"><i class="fas fa-eye-slash" id="eye"></i></span>
                         </div>
                     <div class="remember d-flex gap-3 align-items-center mb-3">
-                        <input class="check" type="checkbox">
+                        <input class="check" type="checkbox",id="rememberMe">
                         <h6 class="m-0 p-0 ">Remember Me</h6>
                         <div>
                             <a class="password_reset mt-2" onclick="pass_forget()">Forget Password</a>
@@ -153,10 +153,32 @@
             pass
         }
 
- function pass_forget(){
-     window.location = "rest_password.html"
- }
+        function pass_forget(){
+            window.location = "rest_password.html"
+        }
 
+    </script>
+    <script>
+        const rmCheck = document.getElementById("rememberMe"),
+            emailInput = document.getElementById("email");
+
+        if (localStorage.checkbox && localStorage.checkbox !== "") {
+        rmCheck.setAttribute("checked", "checked");
+        emailInput.value = localStorage.username;
+        } else {
+        rmCheck.removeAttribute("checked");
+        emailInput.value = "";
+        }
+
+        function lsRememberMe() {
+        if (rmCheck.checked && emailInput.value !== "") {
+            localStorage.username = emailInput.value;
+            localStorage.checkbox = rmCheck.value;
+        } else {
+            localStorage.username = "";
+            localStorage.checkbox = "";
+        }
+        }
     </script>
 </body>
 
