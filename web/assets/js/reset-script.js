@@ -13,3 +13,7 @@ $(document).ready(function(){
         });
     });
 });
+
+function goHome(){
+    window.location="traker-login.html"
+}
