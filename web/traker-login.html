@@ -14,7 +14,6 @@
     <!-- Main CSS File -->
     <link rel="stylesheet" type="text/css" href="assets/css/font-style.css">
     <link rel="stylesheet" type="text/css" href="assets/css/traker-window.css">
-
 </head>
     <div class="traker-main">
         <div class="traker-head">
@@ -55,7 +54,13 @@
                             id="password">
                             <span class="p-viewer"><i class="fas fa-eye-slash" id="eye"></i></span>
                         </div>
-                <input type="checkbox" value="lsRememberMe" id="rememberMe"> <label for="rememberMe">Remember me</label>
+                        <div class="remember d-flex gap-3 align-items-center mb-3">
+                            <input class="check" type="checkbox",id="rememberMe">
+                            <h6 class="m-0 p-0 ">Remember Me</h6>
+                            <div>
+                                <a class="password_reset mt-2" onclick="pass_forget()">Forget Password</a>
+                            </div>
+                </div>
                 <button type="submit" onclick="regValidation()" class="d-btn btn-primary">Sign In</button>
             </div>
             </form>
@@ -89,7 +94,6 @@
                 }
             }
     </script> -->
-
     <script>
         $(function(){
             
@@ -113,6 +117,10 @@
                     }
                 });
             });
+
+            function pass_forget(){
+        window.location = "rest_password.html"
+    }
     </script>
 
     <script>
