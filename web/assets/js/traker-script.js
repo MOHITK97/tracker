@@ -336,9 +336,9 @@ $(window).load(function() {
 
 
 
-function onReady() {
-    window.open("http://localhost:1111/","myWindow","dialog=yes,resizable=0");
-}
+// function onReady() {
+//     window.open("http://localhost:1111/","myWindow","dialog=yes,resizable=0");
+// }
 
 $(document).ready(function(){
   $(".toaster").hide()
@@ -364,6 +364,8 @@ $(document).ready(function(){
   say_hello_js("Javascript World!");
 
   function get_timer_js(key_press,mouse_click){
+    var play = document.getElementById('play')
+    var pause = document.getElementById('pause')
     // console.log("+++++++++++ key_press" + key_press)
     // console.log("+++++++++++ mouse_click" + mouse_click)
     if ((key_press == 0 ) && (mouse_click == 0)){
@@ -389,6 +391,7 @@ $(document).ready(function(){
         // Called if you click No.
         if (no == 'cancel') {
             swal('Your work has been stoped', '', 'error');
+            pause.setAttribute('onclick', 'showPause()');
         }
     });
 

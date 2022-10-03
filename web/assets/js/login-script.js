@@ -17,31 +17,26 @@ $(document).ready(function(){
       $(location).prop('href', url);
 
       }
-
-      if(done == "email"){
-        alert("please enter the email")
-      }
-
-      else if(done == "password"){
-        alert("please enter the password")
-      }
-
-      else if(done == "email & password"){
-        alert("please enter the email and password")
-      }
-      else if(done == "Your shift is not started"){
+      if(done == "Your shift is not started"){
         alert("Your shift is not started now")
+        $('.email').val('');
+        $('.password').val('');
       }
 
       else if(done == "Your shift is ended"){
         alert("Your shift is Completed now")
+        $('.email').val('');
+        $('.password').val('');
       }
 
       else if(done == "Email is Invalid"){
         alert("Email is Invalid")
+        $('.email').val('');
+        $('.password').val('');
       }
 
       else{
+        // alert("Credentials are incorrect")
         $('.email').val('');
         $('.password').val('');
 

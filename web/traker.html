@@ -19,7 +19,44 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link media="screen" rel="stylesheet" href='https://cdn.jsdelivr.net/sweetalert2/6.3.8/sweetalert2.css' />
     <!-- <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script> -->
-
+<style>
+    .dropdown-menu.show {
+        background-color: #f5f5f5;
+        left:-16px !important;
+    }
+   
+    li#dropdownMenuButton:hover {
+        color: #3d9eff;
+    }
+    .trak-menu .dropdown a:hover{
+        color:#3d9eff;
+    }
+    li .Logout a:hover{
+        color:#3d9eff;
+    }
+    .trak-menu ul li .Logout a:hover{
+        color:#3d9eff;
+    }
+    .trak-menu ul {
+        margin: 0 !important;
+    }
+    .traker-main{
+        margin: 0 !important;
+    }
+    .trak-menu {
+        padding: 6px 18px !important;
+    }
+    .company-info-bar {
+        padding: 8px 25px !important;
+    }
+    .trak-info-row {
+      margin-bottom: 0 !important; 
+    }
+    img.urlRedirect {
+        padding-left: 15px;
+        margin-top: 18px;
+    }
+</style>
 </head>
     <div class="toaster" id="error">
         <div class="texture"></div>
@@ -39,6 +76,8 @@
             </div> -->
             <div class="trak-menu">
                 <ul>
+                    <!-- <li><a href= "https://reliable-stroopwafel-6da05f.netlify.app/"  target="_blank" >Application</a></li>
+                    <li><a href="#">Help</a></li>
                     <li class="Logout"><a>Logout</a></li> -->
                     <div class="dropdown">
                         <li class="dropdown-toggle" style="cursor:pointer" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -60,7 +99,7 @@
                 <h4 class="user-first-name">N</h4>
                 <ul>
                     <li><span class="tab-a active-a" data-id="tab1"><img src="assets/images/trak-watch.svg"></span></li>
-                    <li><a href = 'http://reliable-stroopwafel-6da05f.netlify.app/users' target="_blank" class="tab-a" data-id="tab5"><img src="assets/images/Union.svg"></a></li>
+                    <li><a href = 'http://reliable-stroopwafel-6da05f.netlify.app/users' target="_blank" ><img src="assets/images/Union.svg" class="urlRedirect"></a></li>
                     <li> <a href = 'http://reliable-stroopwafel-6da05f.netlify.app/screenshotsw' target="_blank" ><img src="assets/images/screenshot.svg" class="urlRedirect"> </a></li>
                     <li><span class="tab-a" data-id="tab4"><img src="assets/images/settings.svg"></span></li>
 
@@ -84,8 +123,8 @@
 
                     </div>
                     <div class="activate-button">
-                        <img class="pause" src="assets/images/pause.svg">
-                        <img class="play" src="assets/images/play.svg">
+                        <img class="pause" id= "pause" onclick="showPause()" src="assets/images/pause.svg">
+                        <img class="play" id ="play" onclick="showPlay()" src="assets/images/play.svg">
                     </div>
                 </div>
                 <div class="total-trak-info">
@@ -133,7 +172,10 @@
     </div>
 
 <body>
-
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>	
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>	
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>	
+    
     <!-- Vendor JS Files -->
     <script src="https://kit.fontawesome.com/d8f1a5ab19.js" crossorigin="anonymous"></script>
     <script src="assets/js/jquery-3.2.1.slim.min.js"></script>
